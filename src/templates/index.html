@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Citation app
+{% endblock %}
+
+{% block body %}
+
+<h1>Citation helper</h1>
+<h3>Create a new todo</h3>
+
+<form action="/create_citation" method="post">
+  <label for="content">Citation:</label>
+  <input type="text" name="author" placeholder="author">
+  <input type="text" name="name" placeholder="name">
+  <br>
+  <button type="submit">
+    Create
+  </button>
+</form>
+
+
+<ul>
+  <h4>Citations:</h4>
+  {% for citation in citations %}
+    <li style="display: flex">
+      <div>
+        {{ citation }} 
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+
+<div>
+  <a href="/new_citation">Create new citation</a>
+</div>
+
+{% endblock %}
