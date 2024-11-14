@@ -8,9 +8,7 @@ def index():
     citations = get_citations()
     return render_template("index.html", citations=citations) 
 
-@app.route("/new_citation")
-def new():
-    return render_template("new_citation.html")
+
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
