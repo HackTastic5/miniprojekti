@@ -10,8 +10,6 @@ def get_citations():
     return [Citation(citation[0], citation[1], citation[2]) for citation in citations] 
 
 def create_citation(author, title):
-    if validate_citation(author, title) != None:
-        return(Exception("fault"))
     sql = text("INSERT INTO citations (author, title) VALUES (:author, :title)")
     db.session.execute(sql, {"author": author, "title": title })
     db.session.commit()
