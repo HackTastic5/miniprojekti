@@ -5,7 +5,7 @@ Suite Teardown   Close Browser
 Test Setup       Reset Citations
 
 *** Test Cases ***
-At start there are no todos
+Loads at start
     Go To  ${HOME_URL}
     Title Should Be  Citation app
 
@@ -15,6 +15,6 @@ After adding a citation, there is one
     Input Text  author  bot
     Input Text    title    testing
     Click Button  Create
-    Page Should Contain  testing by bot
+    Page Should Contain  testing : written by bot
 
 
