@@ -6,6 +6,6 @@ class TestCitations(unittest.TestCase):
         pass
     
     def test_initial(self):
-        pass
+        return True
     #pytests here
 
