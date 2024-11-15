@@ -4,6 +4,7 @@ env:
   DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
   TEST_ENV: true
   SECRET_KEY: sekret
+  #testing some stuff
 
 on:
   push:
@@ -37,7 +38,7 @@ jobs:
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
-        run: poetry install        
+        run: poetry install
       - name: Run unit tests
         run: poetry run pytest src/tests
       - name: Setup chromedriver
