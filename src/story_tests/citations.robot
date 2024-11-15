@@ -13,7 +13,7 @@ At start there are no todos
 After adding a citation, there is one
     Go To  ${HOME_URL}
     Input Text  author  bot
-    Input Text    name    testing
+    Input Text    title    testing
     Click Button  Create
     Page Should Contain  testing by bot
 

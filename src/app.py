@@ -13,14 +13,16 @@ def index():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     author = request.form.get("author")
-    name = request.form.get("name")
+    title = request.form.get("title")
+    print(author, title)
 
     try:
-        create_citation(author, name)
+        create_citation(author, title)
         return redirect("/")
     except Exception as error:
+        print(error)
         flash(str(error))
-        return  redirect("/new_citation")
+        return  redirect("/")
 
 # testausta varten oleva reitti
 if test_env:

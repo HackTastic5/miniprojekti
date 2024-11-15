@@ -1,4 +1,5 @@
 class UserInputError(Exception):
     pass
 
-#test helpers here
+def validate_citation(author, title):
+    pass

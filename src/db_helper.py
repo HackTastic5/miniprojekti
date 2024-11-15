@@ -35,10 +35,10 @@ def setup_db():
   sql = text(
     f"CREATE TABLE {table_name} ("
     "  id SERIAL PRIMARY KEY, "
-    "  author TEXT NOT NULL,"
-    "  name TEXT"
+    "  author TEXT NOT NULL CHECK (char_length(author) >= 1),"
+    "  title TEXT NOT NULL CHECK (char_length(title) >= 1)"
     ")"
-  )
+)
 
   db.session.execute(sql)
   db.session.commit()

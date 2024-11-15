@@ -8,11 +8,24 @@ Citation app
 
 <h1>Citation helper</h1>
 <h3>Create a new todo</h3>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}
+{% endwith %}
 
 <form action="/create_citation" method="post">
-  <label for="content">Citation:</label>
+  <label for="content">Enter a new citation:</label>
+  <br/>
+  <input type="text" name="title" placeholder="title">
+  <br/>
   <input type="text" name="author" placeholder="author">
-  <input type="text" name="name" placeholder="name">
+  
+  
   <br>
   <button type="submit">
     Create
@@ -25,7 +38,8 @@ Citation app
   {% for citation in citations %}
     <li style="display: flex">
       <div>
-        {{ citation }} 
+        <p><i>{{ citation.title }} </i>: written by {{citation.author}}</p>
+
       </div>
     </li>
   {% endfor %}
