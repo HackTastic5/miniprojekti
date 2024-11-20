@@ -18,19 +18,41 @@ Citation app
 {% endif %}
 {% endwith %}
 
-<form action="/create_citation" method="post">
-  <label for="content">Enter a new citation:</label>
-  <br/>
-  <input type="text" name="title" placeholder="title">
-  <br/>
-  <input type="text" name="author" placeholder="author">
-  
-  
-  <br>
-  <button type="submit">
-    Create
-  </button>
+<form action="/" method="post">
+  <select name="citation_type" required>
+    {% for ctype in all_citation_types %}
+      <option value="{{ ctype }}">{{ ctype }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="submit" value="Valitse">
 </form>
+
+{% if citation_type %}
+  <h2>{{ citation_type }}</h2>
+
+  <form action="/create_citation" method="post">
+    <label for="content">Enter a new citation:</label>
+    <input type="hidden" name="citation_type" value="{{ citation_type }}">
+    <br/>
+    <p>Pakolliset kentät</p>
+    {% for field in all_citation_types[citation_type]["required"] %}
+    <input type="text" name="{{ field }}" placeholder="{{ field }}">
+    <br>
+    {% endfor %}
+    
+    <p>Vapaaehtoiset kentät</p>
+    {% for field in all_citation_types[citation_type]["optional"] %}
+    <input type="text" name="{{ field }}" placeholder="{{ field }}">
+    <br>
+    {% endfor %}
+    
+    <button type="submit">
+      Create
+    </button>
+  </form>
+
+{% endif %}
 
 
 <ul>
