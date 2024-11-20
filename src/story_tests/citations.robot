@@ -12,6 +12,8 @@ Loads at start
 
 After adding a citation, there is one
     Go To  ${HOME_URL}
+    Select From List By Value  citation_type  inproceedings
+    Click Button  Valitse
     Input Text  author  bot
     Input Text    title    testing
     Click Button  Create
