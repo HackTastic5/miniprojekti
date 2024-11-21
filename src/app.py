@@ -27,14 +27,21 @@ def index():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
-    author = request.form.get("author")
-    title = request.form.get("title")
-    booktitle = request.form.get("booktitle")
-    year = request.form.get("year")
-    print(citation_type, author, title, booktitle, year)
+    fields = {}
+
+    # Read the required fields
+    for key in get_citation_types()[citation_type]["required"]:
+        value = request.form.get(key)
+        fields[key] = value
+
+    # Read the optional fields that exist
+    for key in get_citation_types()[citation_type]["optional"]:
+        value = request.form.get(key)
+        if len(value) > 0:
+            fields[key] = value
 
     try:
-        create_citation(citation_type, author, title, booktitle, year)
+        create_citation(citation_type, fields)
         return redirect("/")
     except Exception as error:
         print(error)
