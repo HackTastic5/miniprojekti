@@ -62,8 +62,9 @@ def setup_db():
         "  publisher TEXT DEFAULT NULL,"
         "  school TEXT DEFAULT NULL,"
         "  series TEXT DEFAULT NULL,"
+        "  type TEXT DEFAULT NULL,"
         "  volume TEXT DEFAULT NULL"
-        ")"
+        ");"
     )
 
     db.session.execute(sql)
