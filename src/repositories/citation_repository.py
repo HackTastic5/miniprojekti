@@ -38,6 +38,11 @@ def create_citation(citation_type, fields):
     db.session.commit()
 
 
+def delete_citation(id):
+    sql = text("DELETE FROM citations WHERE id=:id;")
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+
 # This has to be relocated
 def get_citation_types():
     citation_types = {

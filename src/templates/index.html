@@ -61,7 +61,13 @@ Citation app
   {% for citation in citations %}
   <li style="margin-bottom: 1rem;">
     <details>
-      <summary>{{citation}}</summary>
+      <summary>
+        {{citation}}
+        <form action="/delete_citation" method="post">
+          <input type="hidden" name="citation_id" value="{{ citation.id }}">
+          <input type="submit" value="Delete">
+        </form>
+      </summary>
       <div style="margin-left: 20px; margin-top: 5px;">
         <p><strong>Author:</strong> {{citation.author}}</p>
         <p><strong>Year:</strong> {{citation.year}}</p>
