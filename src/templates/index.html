@@ -21,7 +21,7 @@ Citation app
 <form action="/" method="post">
   <select name="citation_type" required>
     {% for ctype in all_citation_types %}
-      <option value="{{ ctype }}">{{ ctype }}</option>
+      <option value="{{ ctype }}" {% if ctype == citation_type %}selected{% endif %}>{{ ctype }}</option>
     {% endfor %}
   </select>
 
