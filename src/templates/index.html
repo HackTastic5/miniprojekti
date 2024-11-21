@@ -55,15 +55,21 @@ Citation app
 {% endif %}
 
 
-<ul>
-  <h4>Citations:</h4>
-  {% for citation in citations %}
-    <li style="display: flex">
-      <div>
-        <p><i>{{ citation.title }} </i>: written by {{citation.author}}</p>
 
+<h4>Citations:</h4>
+<ul>
+  {% for citation in citations %}
+  <li style="margin-bottom: 1rem;">
+    <details>
+      <summary>{{citation}}</summary>
+      <div style="margin-left: 20px; margin-top: 5px;">
+        <p><strong>Author:</strong> {{citation.author}}</p>
+        <p><strong>Year:</strong> {{citation.year}}</p>
+        <p><strong>Type:</strong> {{citation.citation_type}}</p>
+        <p><strong>Booktitle:</strong> {{citation.Booktitle}}</p>
       </div>
-    </li>
+    </details>
+  </li>
   {% endfor %}
 </ul>
 

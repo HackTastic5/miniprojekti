@@ -11,7 +11,8 @@ from util import validate_field
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    citations = get_citations()
+    citations = get_citations()[0]
+    citations_full = get_citations()[1]
     all_citation_types = get_citation_types()
     citation_type = None
 
@@ -20,6 +21,7 @@ def index():
     return render_template(
         "index.html",
         citations=citations,
+        citations_full=citations_full,
         citation_type=citation_type,
         all_citation_types=all_citation_types,
     )

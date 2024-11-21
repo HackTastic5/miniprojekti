@@ -7,7 +7,7 @@ from entities.citation import Citation
 def get_citations():
     result = db.session.execute(text("SELECT * FROM citations"))
     citations = result.fetchall()
-    return [
+    return ([
         Citation(
             citation.id,
             citation.citation_type,
@@ -17,7 +17,7 @@ def get_citations():
             citation.year,
         )
         for citation in citations
-    ]
+    ],[citation for citation in citations ])
 
 
 def create_citation(citation_type, fields):
