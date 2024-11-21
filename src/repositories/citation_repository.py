@@ -1,6 +1,5 @@
 from config import db
 from sqlalchemy import text
-from util import validate_citation
 
 from entities.citation import Citation
 

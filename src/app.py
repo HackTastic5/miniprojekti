@@ -6,6 +6,7 @@ from repositories.citation_repository import (
     get_citation_types,
 )
 from config import app, test_env
+from util import validate_field
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -27,6 +28,8 @@ def index():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
+    author = request.form.get("author")
+    year = request.form.get("year")
     fields = {}
 
     # Read the required fields
@@ -41,6 +44,8 @@ def citation_creation():
             fields[key] = value
 
     try:
+        validate_field("author", author, min_len=5, max_len=40)
+        validate_field("year", year, exact_len=4)
         create_citation(citation_type, fields)
         return redirect("/")
     except Exception as error:
