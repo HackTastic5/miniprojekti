@@ -37,7 +37,7 @@ Citation app
     <br/>
     <p>Pakolliset kentät</p>
     {% for field in all_citation_types[citation_type]["required"] %}
-    <input type="text" name="{{ field }}" placeholder="{{ field }}">
+    <input type="text" name="{{ field }}" placeholder="{{ field }}" required>
     <br>
     {% endfor %}
     
