@@ -46,7 +46,7 @@ def citation_creation():
             fields[key] = value
 
     try:
-        validate_field("author", author, min_len=5, max_len=40)
+        ##validate_field("author", author, min_len=5, max_len=40)
         validate_field("year", year, exact_len=4)
         create_citation(citation_type, fields)
         return redirect("/")

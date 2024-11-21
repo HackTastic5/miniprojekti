@@ -39,7 +39,7 @@ def setup_db():
         f"CREATE TABLE {table_name} ("
         "  id SERIAL PRIMARY KEY, "
         "  citation_type TEXT NOT NULL CHECK (char_length(author) >= 1),"
-        "  author TEXT NOT NULL CHECK (char_length(author) >= 1),"
+        "  author TEXT DEFAULT NULL CHECK (char_length(author) >= 1),"
         "  title TEXT NOT NULL CHECK (char_length(title) >= 1),"
         "  year TEXT DEFAULT NULL,"
         "  address TEXT DEFAULT NULL,"
