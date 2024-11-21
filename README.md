@@ -8,11 +8,48 @@
 
 ## Asennusohjeet
 
-placeholder
+Sovelluksen käyttö vaatii Python-version 3.10-3.12.x, ja koneella tulee olla asennettuna Poetry riippuvuuksien hallintaa varten.
+
+1 Kloonaa repositorio omalle koneellesi seuraavasti:
+```
+$ git clone git@github.com:HackTastic5/miniprojekti.git
+```
+
+2 Lisää juureen .env-tiedosto, josta löytyy seuraavat muuttujat:
+```
+SECRET_KEY=<salainen-avain>
+TEST_ENV=false
+DATABASE_URL=postgresql://<tietokannan-nimi>
+```
+
+Voit luoda salaisen avaimen seuraavasti:
+```
+$ python3
+>>> import secrets
+>>> secrets.token_hex(16)
+```
+
+3 Asenna projektin riippuvuudet seuraavalla komennolla:
+```
+$ poetry install
+```
+
+4 Siirry virtuaaliympäristöön seuraavalla komennolla:
+```
+$ poetry shell
+```
+
+5 Luo sovelluksen käyttämä tietokantataulu virtuaaliympäristössä seuraavasti:
+```
+$ python src/db_helper.py
+```
 
 ## Käyttöohjeet
 
-placeholder
+Käynnistä sovellus virtuaaliympäristössä seuraavasti:
+```
+$ python src/index.py
+```
 
 ## Definition of done
 
