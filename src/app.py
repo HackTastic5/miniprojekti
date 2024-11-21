@@ -29,11 +29,12 @@ def citation_creation():
     citation_type = request.form.get("citation_type")
     author = request.form.get("author")
     title = request.form.get("title")
+    booktitle = request.form.get("booktitle")
     year = request.form.get("year")
-    print(citation_type, author, title, year)
+    print(citation_type, author, title, booktitle, year)
 
     try:
-        create_citation(citation_type, author, title, year)
+        create_citation(citation_type, author, title, booktitle, year)
         return redirect("/")
     except Exception as error:
         print(error)

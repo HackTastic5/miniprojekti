@@ -14,15 +14,19 @@ def get_citations():
             citation.citation_type,
             citation.author,
             citation.title,
+            citation.booktitle,
             citation.year,
         )
         for citation in citations
     ]
 
 
-def create_citation(citation_type, author, title, year):
+def create_citation(citation_type, author, title, booktitle, year):
     sql = text(
-        "INSERT INTO citations (citation_type, author, title, year) VALUES (:citation_type, :author, :title, :year)"
+        "INSERT INTO citations"
+        "(citation_type, author, title, booktitle, year)"
+        "VALUES"
+        "(:citation_type, :author, :title, :booktitle, :year)"
     )
     db.session.execute(
         sql,
@@ -30,6 +34,7 @@ def create_citation(citation_type, author, title, year):
             "citation_type": citation_type,
             "author": author,
             "title": title,
+            "booktitle": booktitle,
             "year": year,
         },
     )
