@@ -17,3 +17,7 @@ placeholder
 ## Definition of done
 
 Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon. 
+
+## Lisenssi
+
+Työ on lisensioitu [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) -lisenssillä.
