@@ -15,6 +15,7 @@ def get_citations():
             citation.title,
             citation.booktitle,
             citation.year,
+            generate_citekey(citation.author, citation.title, citation.year),
         )
         for citation in citations
     ],[citation for citation in citations ])
@@ -36,6 +37,22 @@ def create_citation(citation_type, fields):
 
     print(fields)
     db.session.commit()
+
+
+def generate_citekey(author, title, year):
+    #Assuming in the final product that author is "Last_name, First_name Second_name"
+    #Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
+    key = ""
+    if "," in author:
+        author = author.split(",")[0]
+    key += author
+    if " " in title:
+        title = title.split(" ")
+    for i in title:
+        key += i[0]
+    key += str(len(author) + len(title))
+    key += "_" + str(year)
+    return key
 
 
 def delete_citation(id):
