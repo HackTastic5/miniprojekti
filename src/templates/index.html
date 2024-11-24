@@ -69,10 +69,9 @@ Citation app
         </form>
       </summary>
       <div style="margin-left: 20px; margin-top: 5px;">
-        <p><strong>Author:</strong> {{citation.author}}</p>
-        <p><strong>Year:</strong> {{citation.year}}</p>
-        <p><strong>Type:</strong> {{citation.citation_type}}</p>
-      </div>
+        {% for field in citation.fields %}
+          <p><strong>{{ field.capitalize() }}:</strong> {{citation.fields[field] }}</p>
+        {% endfor %}
     </details>
   </li>
   {% endfor %}

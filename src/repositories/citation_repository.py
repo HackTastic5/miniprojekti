@@ -11,11 +11,8 @@ def get_citations():
         Citation(
             citation.id,
             citation.citation_type,
-            citation.author,
-            citation.title,
-            citation.booktitle,
-            citation.year,
-            generate_citekey(citation.author, citation.title, citation.year),
+            "generate_citekey(citation.author, citation.title, citation.year)",
+            {field:value for (field, value) in zip(citation._fields[2:], citation[2:]) if value != None}
         )
         for citation in citations
     ],[citation for citation in citations ])
@@ -38,7 +35,8 @@ def create_citation(citation_type, fields):
     print(fields)
     db.session.commit()
 
-
+# Needs more work, need to consider missing author
+# Possibly missing year and title too in case of misc?
 def generate_citekey(author, title, year):
     #Assuming in the final product that author is "Last_name, First_name Second_name"
     #Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
@@ -59,6 +57,7 @@ def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
     db.session.execute(sql, {"id":id})
     db.session.commit()
+
 
 # This has to be relocated
 def get_citation_types():
