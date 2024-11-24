@@ -53,6 +53,17 @@ def generate_citekey(author, title, year):
     return key
 
 
+def generate_valid_bibtex_entry(citation):
+    bib = f"@{citation.citation_type}{{{citation.citekey},"
+
+    for field in citation.fields:
+        bib += f"\n    {field} = {citation.fields[field]},"
+
+    bib = bib[:-1]+"\n}"
+
+    return bib
+
+
 def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
     db.session.execute(sql, {"id":id})
