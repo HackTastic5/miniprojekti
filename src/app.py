@@ -4,7 +4,7 @@ from repositories.citation_repository import (
     get_citations,
     create_citation,
     get_citation_types,
-    delete_citation
+    delete_citation,
 )
 from config import app, test_env
 from util import validate_field
@@ -56,12 +56,14 @@ def citation_creation():
         flash(str(error))
         return redirect("/")
 
+
 @app.route("/delete_citation", methods=["POST"])
 def citation_deletion():
     citation_id = request.form.get("citation_id")
     delete_citation(citation_id)
 
     return redirect("/")
+
 
 # testausta varten oleva reitti
 if test_env:

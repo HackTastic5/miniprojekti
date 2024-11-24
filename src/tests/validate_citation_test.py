@@ -1,6 +1,7 @@
 import unittest
 from util import validate_field, UserInputError
 
+
 class TestCitations(unittest.TestCase):
     def setUp(self):
         pass

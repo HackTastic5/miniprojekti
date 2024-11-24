@@ -7,15 +7,22 @@ from entities.citation import Citation
 def get_citations():
     result = db.session.execute(text("SELECT * FROM citations"))
     citations = result.fetchall()
-    return ([
-        Citation(
-            citation.id,
-            citation.citation_type,
-            "generate_citekey(citation.author, citation.title, citation.year)",
-            {field:value for (field, value) in zip(citation._fields[2:], citation[2:]) if value != None}
-        )
-        for citation in citations
-    ],[citation for citation in citations ])
+    return (
+        [
+            Citation(
+                citation.id,
+                citation.citation_type,
+                "generate_citekey(citation.author, citation.title, citation.year)",
+                {
+                    field: value
+                    for (field, value) in zip(citation._fields[2:], citation[2:])
+                    if value != None
+                },
+            )
+            for citation in citations
+        ],
+        [citation for citation in citations],
+    )
 
 
 def create_citation(citation_type, fields):
@@ -35,11 +42,12 @@ def create_citation(citation_type, fields):
     print(fields)
     db.session.commit()
 
+
 # Needs more work, need to consider missing author
 # Possibly missing year and title too in case of misc?
 def generate_citekey(author, title, year):
-    #Assuming in the final product that author is "Last_name, First_name Second_name"
-    #Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
+    # Assuming in the final product that author is "Last_name, First_name Second_name"
+    # Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
     key = ""
     if "," in author:
         author = author.split(",")[0]
@@ -59,14 +67,14 @@ def generate_valid_bibtex_entry(citation):
     for field in citation.fields:
         bib += f"\n    {field} = {citation.fields[field]},"
 
-    bib = bib[:-1]+"\n}"
+    bib = bib[:-1] + "\n}"
 
     return bib
 
 
 def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
-    db.session.execute(sql, {"id":id})
+    db.session.execute(sql, {"id": id})
     db.session.commit()
 
 
@@ -173,7 +181,7 @@ def get_citation_types():
         },
         "misc": {
             "required": [],
-            "optional": ["author", "title", "howpublished", "month", "year", "note"]
+            "optional": ["author", "title", "howpublished", "month", "year", "note"],
         },
         "phdthesis": {
             "required": ["author", "title", "school", "year"],
