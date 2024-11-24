@@ -161,7 +161,10 @@ def get_citation_types():
             "required": ["author", "title", "school", "year"],
             "optional": ["type", "address", "month", "note"],
         },
-        "misc": {"required": [], "optional": []},
+        "misc": {
+            "required": [],
+            "optional": ["author", "title", "howpublished", "month", "year", "note"]
+        },
         "phdthesis": {
             "required": ["author", "title", "school", "year"],
             "optional": ["type", "address", "month", "note"],
