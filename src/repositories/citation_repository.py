@@ -1,4 +1,4 @@
-from config import db
+from config import db, EXPORT_FILE_PATH
 from sqlalchemy import text
 
 from entities.citation import Citation
@@ -20,8 +20,7 @@ def get_citations():
                 },
             )
             for citation in citations
-        ],
-        [citation for citation in citations],
+        ]
     )
 
 
@@ -67,10 +66,19 @@ def generate_valid_bibtex_entry(citation):
     for field in citation.fields:
         bib += f"\n    {field} = {citation.fields[field]},"
 
-    bib = bib[:-1] + "\n}"
+    bib = bib[:-1] + "\n}\n\n"
 
     return bib
 
+
+def export_all_citations():
+    citations = get_citations()
+
+    with open(EXPORT_FILE_PATH, "w", encoding="utf-8") as file:
+        write_string = ""
+        for citation in citations:
+            write_string += generate_valid_bibtex_entry(citation)
+        file.write(write_string)
 
 def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
