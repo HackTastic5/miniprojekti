@@ -5,6 +5,7 @@ from repositories.citation_repository import (
     create_citation,
     get_citation_types,
     delete_citation,
+    export_all_citations,
 )
 from config import app, test_env
 from util import validate_field
@@ -12,8 +13,7 @@ from util import validate_field
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    citations = get_citations()[0]
-    citations_full = get_citations()[1]
+    citations = get_citations()
     all_citation_types = get_citation_types()
     citation_type = None
 
@@ -22,7 +22,6 @@ def index():
     return render_template(
         "index.html",
         citations=citations,
-        citations_full=citations_full,
         citation_type=citation_type,
         all_citation_types=all_citation_types,
     )
@@ -62,6 +61,13 @@ def citation_deletion():
     citation_id = request.form.get("citation_id")
     delete_citation(citation_id)
 
+    return redirect("/")
+
+
+
+@app.route("/export_citations", methods=["POST"])
+def export_citations():
+    export_all_citations()
     return redirect("/")
 
 
