@@ -54,18 +54,50 @@ Citation app
 
 {% endif %}
 
-
-
 <h4>Citations:</h4>
 <ul>
   {% for citation in citations %}
   <li style="margin-bottom: 1rem;">
+    {% if citation.id == editing_id %}
+
+      <p><b>Editing</b> {{ citation }}:</p>
+        {# Changing citation type is currently not supported #}
+        <p>Citation type: {{ citation.citation_type }}</p>
+        <form action="/update_citation" method="post">
+        <input type="hidden" name="citation_id" value="{{ citation.id }}">
+        <p>Required fields:</p>
+        {% for field in all_citation_types[citation.citation_type]["required"] %}
+          <input type="text" name="{{ field }}"
+           {% if field in citation.fields %}
+           value="{{ citation.fields[field] }}"
+           {% endif %}
+           placeholder="{{ field }}" required />
+          <br>
+        {% endfor %}
+        <p>Optional fields:</p>
+        {% for field in all_citation_types[citation.citation_type]["optional"] %}
+          <input type="text" name="{{ field }}"
+           {% if field in citation.fields %}
+           value="{{ citation.fields[field] }}"
+           {% endif %}
+           placeholder="{{ field }}" />
+          <br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+        </form>
+
+    {% else %}
+
     <details>
       <summary>
-        {{citation}}
+        {{ citation }}
         <form action="/delete_citation" method="post">
           <input type="hidden" name="citation_id" value="{{ citation.id }}">
           <input type="submit" value="Delete">
+        </form>
+        <form action="/" method="post">
+          <input type="hidden" name="editing_id" value="{{ citation.id }}">
+          <input type="submit" value="Edit">
         </form>
       </summary>
       <div style="margin-left: 20px; margin-top: 5px;">
@@ -74,6 +106,8 @@ Citation app
         {% endfor %}
       </div>
     </details>
+
+    {% endif %}
   </li>
   {% endfor %}
 </ul>
