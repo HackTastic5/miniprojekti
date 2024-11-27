@@ -81,6 +81,25 @@ def export_all_citations():
         file.write(write_string)
 
 
+def update_citation(data):
+    # Currently updates all fields that have a value
+    # even if they haven't actually changed.
+    # Could maybe rework to exclude them,
+    # but it's probably not necessary
+    fields_to_update = []
+    for key, value in data.items():
+        if len(value) > 0 and key != "citation_id":
+            fields_to_update.append(key)
+
+    sql = text(
+        "UPDATE citations "
+        f"SET {', '.join(f'{key}=:{key}' for key in fields_to_update)} "
+        "WHERE id=:citation_id;"
+    )
+    db.session.execute(sql, data)
+    db.session.commit()
+
+
 def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
     db.session.execute(sql, {"id": id})
