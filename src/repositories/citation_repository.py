@@ -11,7 +11,9 @@ def get_citations():
         Citation(
             citation.id,
             citation.citation_type,
-            generate_citekey(citation.author, citation.title, citation.year, citation.id),
+            generate_citekey(
+                citation.author, citation.title, citation.year, citation.id
+            ),
             {
                 field: value
                 for (field, value) in zip(citation._fields[2:], citation[2:])
@@ -50,12 +52,14 @@ def generate_citekey(author, title, year, id):
     if author is not None:
         if "," in author:
             author = author.split(",")[0]
-        key += author.replace(" ", "") #also works if the author is in format first_name last_name
+        key += author.replace(
+            " ", ""
+        )  # also works if the author is in format first_name last_name
     if " " in title:
         title = title.split(" ")
     for i in title:
         key += i[0]
-    key += str(id) #uses the citation id to ensure uniqueness
+    key += str(id)  # uses the citation id to ensure uniqueness
     key += "_" + str(year)
     return key
 
