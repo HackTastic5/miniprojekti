@@ -57,4 +57,4 @@ Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset
 
 ## Lisenssi
 
-Työ on lisensioitu [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) -lisenssillä.
+Työ on lisensoitu [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) -lisenssillä.
