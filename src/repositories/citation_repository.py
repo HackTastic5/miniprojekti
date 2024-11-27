@@ -1,5 +1,5 @@
-from config import db, EXPORT_FILE_PATH
 from sqlalchemy import text
+from config import db, EXPORT_FILE_PATH
 
 from entities.citation import Citation
 
@@ -15,7 +15,7 @@ def get_citations():
             {
                 field: value
                 for (field, value) in zip(citation._fields[2:], citation[2:])
-                if value != None
+                if value is not None
             },
         )
         for citation in citations

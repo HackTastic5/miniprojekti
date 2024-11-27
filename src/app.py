@@ -9,7 +9,7 @@ from repositories.citation_repository import (
     export_all_citations,
 )
 from config import app, test_env
-from util import validate_field
+from util import validate_field, UserInputError
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -35,7 +35,7 @@ def index():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
-    author = request.form.get("author")
+    ##author = request.form.get("author")
     year = request.form.get("year")
     fields = {}
 
@@ -55,7 +55,8 @@ def citation_creation():
         validate_field("year", year, exact_len=4)
         create_citation(citation_type, fields)
         return redirect("/")
-    except Exception as error:
+
+    except UserInputError as error:
         print(error)
         flash(str(error))
         return redirect("/")
