@@ -32,4 +32,18 @@ Type selection works
     Click Button  Create
     Page Should Contain  testing by author2
 
+Deletion works
+    Go To  ${HOME_URL}
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author2
+    Input Text  title   testing
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing by author2
+    Click Button  Delete
+    Page Should Not Contain    testing by author2
+
+    
     

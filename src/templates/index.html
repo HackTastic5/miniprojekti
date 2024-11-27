@@ -55,7 +55,8 @@ Citation app
 {% endif %}
 
 <h4>Citations:</h4>
-<ul>
+<input type="text" id="filter" placeholder="Filter citations" />
+<ul id="citationlist">
   {% for citation in citations %}
   <li style="margin-bottom: 1rem;">
     {% if citation.id == editing_id %}
@@ -90,7 +91,7 @@ Citation app
 
     <details>
       <summary>
-        {{ citation }}
+        <span class="citation_title">{{citation}}</span>
         <form action="/delete_citation" method="post">
           <input type="hidden" name="citation_id" value="{{ citation.id }}">
           <input type="submit" value="Delete">
@@ -112,10 +113,38 @@ Citation app
   {% endfor %}
 </ul>
 
+<script>
+  document.getElementById('filter').addEventListener('input', function(){
+    console.log(this.value)
+    const filter = (this.value).toLowerCase();
+    const items = document.querySelectorAll('#citationlist li');
+
+
+    items.forEach(function(item) {
+      console.log(item)
+      const title = item.querySelector('.citation_title').textContent.toLowerCase();
+      console.log(title)
+      if (title.includes(filter)) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    })
+  })
+
+
+</script>
+
 <div style="margin-top: 1rem;">
-  <form action="/export_citations" method="post">
+  <form action="/export_citations" method="post" onsubmit="MyFunction()">
     <input type="submit" value="Luo bib-tiedosto">
   </form>
 </div>
+
+<script>
+  function MyFunction() {
+    alert("The Bibtex file has been generated and can be found in the directory 'data'");
+  }
+</script>
 
 {% endblock %}

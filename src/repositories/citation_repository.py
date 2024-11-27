@@ -11,7 +11,7 @@ def get_citations():
         Citation(
             citation.id,
             citation.citation_type,
-            generate_citekey(citation.author, citation.title, citation.year),
+            generate_citekey(citation.author, citation.title, citation.year, citation.id),
             {
                 field: value
                 for (field, value) in zip(citation._fields[2:], citation[2:])
@@ -43,19 +43,19 @@ def create_citation(citation_type, fields):
 # A null author is left out of the final key
 # Title and year have NOT NULL constraints
 # but if that changes this will have to be reworked
-def generate_citekey(author, title, year):
+def generate_citekey(author, title, year, id):
     # Assuming in the final product that author is "Last_name, First_name Second_name"
     # Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
     key = ""
     if author is not None:
         if "," in author:
             author = author.split(",")[0]
-        key += author
+        key += author.replace(" ", "") #also works if the author is in format first_name last_name
     if " " in title:
         title = title.split(" ")
     for i in title:
         key += i[0]
-    key += str((len(author) if author else 0) + len(title))
+    key += str(id) #uses the citation id to ensure uniqueness
     key += "_" + str(year)
     return key
 
