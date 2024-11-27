@@ -58,7 +58,7 @@ Citation app
 <input type="text" id="filter" placeholder="Filter citations" />
 <ul id="citationlist">
   {% for citation in citations %}
-  <li style="margin-bottom: 1rem;">
+  <li style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
     {% if citation.id == editing_id %}
 
       <p><b>Editing</b> {{ citation }}:</p>

@@ -45,5 +45,26 @@ Deletion works
     Click Button  Delete
     Page Should Not Contain    testing by author2
 
-    
-    
+Filtering works
+    Go To  ${HOME_URL}
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author1
+    Input Text  title   found
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  found by author1
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author2
+    Input Text  title   filtered
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  filtered by author2
+    Element Should Be Visible  found
+    Element Should Be Visible  filtered
+    Input Text  filter  found
+    Element Should Be Visible  found
+    Element Should Not Be Visible  filtered
