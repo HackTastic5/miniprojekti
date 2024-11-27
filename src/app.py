@@ -16,13 +16,18 @@ def index():
     citations = get_citations()
     all_citation_types = get_citation_types()
     citation_type = None
+    editing_id = -1
 
     if request.method == "POST":
         citation_type = request.form["citation_type"]
+        citation_type = request.form.get("citation_type")
+        editing_id = int(request.form.get("editing_id") or -1)
+
     return render_template(
         "index.html",
         citations=citations,
         citation_type=citation_type,
+        editing_id=editing_id,
         all_citation_types=all_citation_types,
     )
 
