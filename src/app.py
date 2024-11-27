@@ -64,7 +64,6 @@ def citation_deletion():
     return redirect("/")
 
 
-
 @app.route("/export_citations", methods=["POST"])
 def export_citations():
     export_all_citations()
