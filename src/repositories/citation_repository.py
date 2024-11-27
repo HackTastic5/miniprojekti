@@ -64,7 +64,7 @@ def generate_valid_bibtex_entry(citation):
     bib = f"@{citation.citation_type}{{{citation.citekey},"
 
     for field in citation.fields:
-        bib += f"\n    {field} = {citation.fields[field]},"
+        bib += f"\n    {field} = {{{citation.fields[field]}}},"
 
     bib = bib[:-1] + "\n}\n\n"
 
