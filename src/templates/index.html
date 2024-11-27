@@ -102,9 +102,15 @@ Citation app
 </script>
 
 <div style="margin-top: 1rem;">
-  <form action="/export_citations" method="post">
+  <form action="/export_citations" method="post" onsubmit="MyFunction()">
     <input type="submit" value="Luo bib-tiedosto">
   </form>
 </div>
+
+<script>
+  function MyFunction() {
+    alert("The Bibtex file has been generated and can be found in the directory 'data'");
+  }
+</script>
 
 {% endblock %}
