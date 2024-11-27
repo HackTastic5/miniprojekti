@@ -7,21 +7,19 @@ from entities.citation import Citation
 def get_citations():
     result = db.session.execute(text("SELECT * FROM citations"))
     citations = result.fetchall()
-    return (
-        [
-            Citation(
-                citation.id,
-                citation.citation_type,
-                "generate_citekey(citation.author, citation.title, citation.year)",
-                {
-                    field: value
-                    for (field, value) in zip(citation._fields[2:], citation[2:])
-                    if value != None
-                },
-            )
-            for citation in citations
-        ]
-    )
+    return [
+        Citation(
+            citation.id,
+            citation.citation_type,
+            generate_citekey(citation.author, citation.title, citation.year),
+            {
+                field: value
+                for (field, value) in zip(citation._fields[2:], citation[2:])
+                if value != None
+            },
+        )
+        for citation in citations
+    ]
 
 
 def create_citation(citation_type, fields):
@@ -42,20 +40,22 @@ def create_citation(citation_type, fields):
     db.session.commit()
 
 
-# Needs more work, need to consider missing author
-# Possibly missing year and title too in case of misc?
+# A null author is left out of the final key
+# Title and year have NOT NULL constraints
+# but if that changes this will have to be reworked
 def generate_citekey(author, title, year):
     # Assuming in the final product that author is "Last_name, First_name Second_name"
     # Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
     key = ""
-    if "," in author:
-        author = author.split(",")[0]
-    key += author
+    if author is not None:
+        if "," in author:
+            author = author.split(",")[0]
+        key += author
     if " " in title:
         title = title.split(" ")
     for i in title:
         key += i[0]
-    key += str(len(author) + len(title))
+    key += str((len(author) if author else 0) + len(title))
     key += "_" + str(year)
     return key
 
@@ -79,6 +79,7 @@ def export_all_citations():
         for citation in citations:
             write_string += generate_valid_bibtex_entry(citation)
         file.write(write_string)
+
 
 def delete_citation(id):
     sql = text("DELETE FROM citations WHERE id=:id;")
