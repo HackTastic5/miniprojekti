@@ -5,6 +5,7 @@ from repositories.citation_repository import (
     create_citation,
     get_citation_types,
     delete_citation,
+    update_citation,
     export_all_citations,
 )
 from config import app, test_env
@@ -16,13 +17,17 @@ def index():
     citations = get_citations()
     all_citation_types = get_citation_types()
     citation_type = None
+    editing_id = -1
 
     if request.method == "POST":
-        citation_type = request.form["citation_type"]
+        citation_type = request.form.get("citation_type")
+        editing_id = int(request.form.get("editing_id") or -1)
+
     return render_template(
         "index.html",
         citations=citations,
         citation_type=citation_type,
+        editing_id=editing_id,
         all_citation_types=all_citation_types,
     )
 
@@ -60,6 +65,13 @@ def citation_creation():
 def citation_deletion():
     citation_id = request.form.get("citation_id")
     delete_citation(citation_id)
+
+    return redirect("/")
+
+
+@app.route("/update_citation", methods=["POST"])
+def edit_citation():
+    update_citation(request.form.to_dict())
 
     return redirect("/")
 
