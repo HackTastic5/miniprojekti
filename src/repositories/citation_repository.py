@@ -1,6 +1,6 @@
+import os
 from sqlalchemy import text
 from config import db
-import os
 
 from entities.citation import Citation
 
