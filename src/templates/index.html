@@ -137,8 +137,8 @@ Citation app
 </script>
 
 <div style="margin-top: 1rem;">
-  <form action="/export_citations" method="post" onsubmit="MyFunction()">
-    <input type="text" name="bibname" placeholder="Bib file name">
+  <form action="/export_citations" method="post" onsubmit=" return MyFunction()">
+    <input type="text" name="bibname" placeholder="Bib file name" id="bibname">
     <br/>
     <button type="submit">
       Generate Bib file
@@ -148,7 +148,15 @@ Citation app
 
 <script>
   function MyFunction() {
-    alert("The Bibtex file has been generated and can be found in the apps data directory");
+    const bibnameInput = document.getElementById('bibname').value.trim();
+    
+    if (bibnameInput === '') {
+      alert("Please enter a Bib file name.");
+      return false; 
+    }
+    
+    alert("The Bibtex file has been generated and can be found in the app's data directory");
+    return true; 
   }
 </script>
 
