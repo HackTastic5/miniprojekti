@@ -79,7 +79,8 @@ def edit_citation():
 
 @app.route("/export_citations", methods=["POST"])
 def export_citations():
-    export_all_citations()
+    bib_name = request.form.get("bibname")
+    export_all_citations(bib_name)
     return redirect("/")
 
 
