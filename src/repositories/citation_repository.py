@@ -80,9 +80,9 @@ def export_all_citations(bibname):
     bibname = str(bibname) + ".bib"
     citations = get_citations()
     this_path = os.path.dirname(__file__)
-    EXPORT_FILE_PATH = os.path.join(this_path, "..", "..", "data", bibname)
+    true_path = os.path.join(this_path, "..", "..", "data", bibname)
 
-    with open(EXPORT_FILE_PATH, "w", encoding="utf-8") as file:
+    with open(true_path, "w", encoding="utf-8") as file:
         write_string = ""
         for citation in citations:
             write_string += generate_valid_bibtex_entry(citation)
