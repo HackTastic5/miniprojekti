@@ -45,21 +45,67 @@ Deletion works
     Click Button  Delete
     Page Should Not Contain    testing by author2
 
-Editing works
+Deletion works when there are multiple delete buttons
     Go To  ${HOME_URL}
     Select From List By Value  citation_type  article
     Click Button  Select
-    Input Text  author  author3
+    Input Text  author  author
     Input Text  title   testing
     Input Text  journal   testing
     Input Text  year    2024
     Click Button  Create
-    Page Should Contain  testing by author3
+    Page Should Contain  testing by author
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  another author
+    Input Text  title   testing again
+    Input Text  journal   testing again
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing again by another author
+    Click Button  //span[contains(text(), 'testing again by another author')]/../form/input[@value='Delete']
+    Page Should Contain  testing by author
+    Page Should Not Contain  testing again by another author
+
+Editing works
+    Go To  ${HOME_URL}
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author
+    Input Text  title   testing
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing by author
     Click Button  Edit
-    Input Text  author  author4
+    Input Text  author  another author
     Input Text  title   testing again
     Click Button  Submit
-    Page Should Contain  testing again by author4
+    Page Should Contain  testing again by another author
+
+Editing works when there are multiple edit buttons
+    Go To  ${HOME_URL}
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author
+    Input Text  title   testing
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing by author
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  another author
+    Input Text  title   testing again
+    Input Text  journal   testing again
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing again by another author
+    Click Button  //span[contains(text(), 'testing again by another author')]/../form/input[@value='Edit']
+    Input Text  author  some author
+    Click Button  Submit
+    Page Should Contain  testing by author
+    Page Should Contain  testing again by some author
 
 Filtering works
     Go To  ${HOME_URL}
