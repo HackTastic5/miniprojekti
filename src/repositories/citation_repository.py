@@ -46,7 +46,7 @@ def create_citation(citation_type, fields):
 # A null author is left out of the final key
 # Title and year have NOT NULL constraints
 # but if that changes this will have to be reworked
-def generate_citekey(author, title, year, id):
+def generate_citekey(author, title, year, cite_id):
     # Assuming in the final product that author is "Last_name, First_name Second_name"
     # Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
     key = ""
@@ -60,7 +60,7 @@ def generate_citekey(author, title, year, id):
         title = title.split(" ")
     for i in title:
         key += i[0]
-    key += str(id)  # uses the citation id to ensure uniqueness
+    key += str(cite_id)  # uses the citation id to ensure uniqueness
     key += "_" + str(year)
     return key
 
@@ -83,7 +83,7 @@ def export_all_citations(bibname):
     true_path = os.path.join(this_path, "..", "..", "data", bibname)
 
     if os.path.exists(true_path):
-        raise FileExistsError(f"The file {bibname} already exists")
+        raise FileExistsError(f"The file {bibname} was overwritten")
 
     with open(true_path, "w", encoding="utf-8") as file:
         write_string = ""
