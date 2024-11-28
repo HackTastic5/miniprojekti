@@ -82,6 +82,9 @@ def export_all_citations(bibname):
     this_path = os.path.dirname(__file__)
     true_path = os.path.join(this_path, "..", "..", "data", bibname)
 
+    if os.path.exists(true_path):
+        raise FileExistsError(f"The file {bibname} already exists")
+
     with open(true_path, "w", encoding="utf-8") as file:
         write_string = ""
         for citation in citations:
