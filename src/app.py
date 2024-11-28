@@ -80,9 +80,16 @@ def edit_citation():
 @app.route("/export_citations", methods=["POST"])
 def export_citations():
     bib_name = request.form.get("bibname")
-    export_all_citations(bib_name)
-    return redirect("/")
 
+    try:
+        export_all_citations(bib_name)
+        return redirect("/")
+    
+    except FileExistsError as error:
+        print(error)
+        flash(str(error))
+        return redirect("/")
+    
 
 # testausta varten oleva reitti
 if test_env:
