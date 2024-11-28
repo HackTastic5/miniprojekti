@@ -45,6 +45,22 @@ Deletion works
     Click Button  Delete
     Page Should Not Contain    testing by author2
 
+Editing works
+    Go To  ${HOME_URL}
+    Select From List By Value  citation_type  article
+    Click Button  Select
+    Input Text  author  author3
+    Input Text  title   testing
+    Input Text  journal   testing
+    Input Text  year    2024
+    Click Button  Create
+    Page Should Contain  testing by author3
+    Click Button  Edit
+    Input Text  author  author4
+    Input Text  title   testing again
+    Click Button  Submit
+    Page Should Contain  testing again by author4
+
 Filtering works
     Go To  ${HOME_URL}
     Select From List By Value  citation_type  article
