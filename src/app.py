@@ -84,12 +84,10 @@ def export_citations():
     try:
         export_all_citations(bib_name)
         return redirect("/")
-    
     except FileExistsError as error:
         print(error)
         flash(str(error))
         return redirect("/")
-    
 
 # testausta varten oleva reitti
 if test_env:
