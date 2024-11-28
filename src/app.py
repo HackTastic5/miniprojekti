@@ -110,7 +110,7 @@ if test_env:
                 "volume":"41",
                 "number":"2",
                 "pages":"64--70",
-                "publisher":"Taylor \& Francis"
+                "publisher":"Taylor & Francis"
              }
         )
 
@@ -124,16 +124,20 @@ if test_env:
                 "number":"5",
                 "pages":"421--434",
                 "year":"2003",
-                "publisher":"Taylor \& Francis"
+                "publisher":"Taylor & Francis"
             }
         )
 
         create_citation(
             "inproceedings",
             {
-                "title":"Examining the role of self-regulated learning on introductory programming performance",
+                "title":("Examining the role of self-regulated "
+                         "learning on introductory programming performance"
+                         ),
                 "author":"Bergin, Susan and Reilly, Ronan and Traynor, Desmond",
-                "booktitle":"Proceedings of the first international workshop on Computing education research",
+                "booktitle":("Proceedings of the first international workshop "
+                             "on Computing education research"
+                ),
                 "pages":"81--86",
                 "year":"2005"
             }
