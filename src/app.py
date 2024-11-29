@@ -55,13 +55,7 @@ def helper():
         print(response.text)
         doi_result= get_citation_by_doi(response.text)
         print(doi_result)
-        while doi_result == None and counter < 5:
-            response = model.generate_content(f"Give me a different DOI number, i couldn't find that one. Just a DOI number and nothing else")
-            print(response.text)
-            doi_result= get_citation_by_doi(response.text)
-            counter +=1
-        
-        if counter < 5: #avoid infinite loops
+        if doi_result:
             citation_type = doi_result["citation_type"]
             fields = doi_result["fields"]
         
