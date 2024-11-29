@@ -7,6 +7,7 @@ from repositories.citation_repository import (
     delete_citation,
     update_citation,
     export_all_citations,
+    get_citation_by_doi
 )
 from config import app, test_env
 from util import validate_field, UserInputError
@@ -17,16 +18,23 @@ def index():
     citations = get_citations()
     all_citation_types = get_citation_types()
     citation_type = None
+    fields = {}
     editing_id = -1
 
     if request.method == "POST":
         citation_type = request.form.get("citation_type")
         editing_id = int(request.form.get("editing_id") or -1)
+        doi = request.form.get("doi")
+        doi_result = get_citation_by_doi(doi)
+        if doi_result:
+            citation_type = doi_result["citation_type"]
+            fields = doi_result["fields"]
 
     return render_template(
         "index.html",
         citations=citations,
         citation_type=citation_type,
+        fields=fields,
         editing_id=editing_id,
         all_citation_types=all_citation_types,
     )
@@ -110,7 +118,7 @@ if test_env:
                 "volume":"41",
                 "number":"2",
                 "pages":"64--70",
-                "publisher":"Taylor \& Francis"
+                "publisher":"Taylor & Francis"
              }
         )
 
@@ -124,16 +132,20 @@ if test_env:
                 "number":"5",
                 "pages":"421--434",
                 "year":"2003",
-                "publisher":"Taylor \& Francis"
+                "publisher":"Taylor & Francis"
             }
         )
 
         create_citation(
             "inproceedings",
             {
-                "title":"Examining the role of self-regulated learning on introductory programming performance",
+                "title":("Examining the role of self-regulated "
+                         "learning on introductory programming performance"
+                         ),
                 "author":"Bergin, Susan and Reilly, Ronan and Traynor, Desmond",
-                "booktitle":"Proceedings of the first international workshop on Computing education research",
+                "booktitle":("Proceedings of the first international workshop "
+                             "on Computing education research"
+                ),
                 "pages":"81--86",
                 "year":"2005"
             }

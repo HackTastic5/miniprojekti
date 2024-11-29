@@ -28,6 +28,13 @@ Citation app
   <input type="submit" value="Select">
 </form>
 
+<p>OR</p>
+
+<form action="/" method="post">
+  <input type="text" id="doi" name="doi" placeholder="doi" required>
+  <input type="submit" value="DOI-search">
+</form>
+
 {% if citation_type %}
   <h2>{{ citation_type }}</h2>
 
@@ -37,13 +44,21 @@ Citation app
     <br/>
     <p>Required fields:</p>
     {% for field in all_citation_types[citation_type]["required"] %}
-    <input type="text" name="{{ field }}" placeholder="{{ field }}" required>
+    <input type="text" name="{{ field }}"
+    {% if field in fields %}
+    value="{{ fields[field] }}"
+    {% endif %}
+    placeholder="{{ field }}" required>
     <br>
     {% endfor %}
     
     <p>Optional fields:</p>
     {% for field in all_citation_types[citation_type]["optional"] %}
-    <input type="text" name="{{ field }}" placeholder="{{ field }}">
+    <input type="text" name="{{ field }}"
+    {% if field in fields %}
+    value="{{ fields[field] }}"
+    {% endif %}
+    placeholder="{{ field }}">
     <br>
     {% endfor %}
     
