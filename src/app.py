@@ -7,11 +7,10 @@ from repositories.citation_repository import (
     delete_citation,
     update_citation,
     export_all_citations,
-    get_citation_by_doi
+    get_citation_by_doi,
 )
 from config import app, test_env, model
 from util import validate_field, UserInputError
-
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -26,10 +25,13 @@ def index():
         citation_type = request.form.get("citation_type")
         editing_id = int(request.form.get("editing_id") or -1)
         doi = request.form.get("doi")
-        doi_result = get_citation_by_doi(doi)
-        if doi_result:
-            citation_type = doi_result["citation_type"]
-            fields = doi_result["fields"]
+        if doi:
+            doi_result = get_citation_by_doi(doi)
+            if doi_result:
+                citation_type = doi_result["citation_type"]
+                fields = doi_result["fields"]
+            else:
+                flash("No results found for specified DOI")
 
     return render_template(
         "index.html",
@@ -56,17 +58,18 @@ def helper():
             f"give me just the doi number and nothing else"
         )
         print(response.text)
-        doi_result= get_citation_by_doi(response.text)
+        doi_result = get_citation_by_doi(response.text)
         print(doi_result)
         if doi_result:
             citation_type = doi_result["citation_type"]
             fields = doi_result["fields"]
 
-
-    return render_template("ai.html",
+    return render_template(
+        "ai.html",
         citation_type=citation_type,
         fields=fields,
-        all_citation_types=all_citation_types,)
+        all_citation_types=all_citation_types,
+    )
 
 
 @app.route("/create_citation", methods=["POST"])
@@ -126,6 +129,7 @@ def export_citations():
         flash(str(error))
         return redirect("/")
 
+
 # testausta varten oleva reitti
 if test_env:
 
@@ -134,49 +138,50 @@ if test_env:
         reset_db()
         return jsonify({"message": "db reset"})
 
-
     @app.route("/review_data")
     def create_review_data():
         create_citation(
             "article",
             {
-                "author":"Zimmerman, Barry J",
-                "title":"Becoming a self-regulated learner: An overview",
-                "year":"2002",
-                "journal":"Theory into practice",
-                "volume":"41",
-                "number":"2",
-                "pages":"64--70",
-                "publisher":"Taylor & Francis"
-             }
+                "author": "Zimmerman, Barry J",
+                "title": "Becoming a self-regulated learner: An overview",
+                "year": "2002",
+                "journal": "Theory into practice",
+                "volume": "41",
+                "number": "2",
+                "pages": "64--70",
+                "publisher": "Taylor & Francis",
+            },
         )
 
         create_citation(
             "article",
             {
-                "title":"Procrastination at work and time management training",
-                "author":"Eerde, Wendelien Van",
-                "journal":"The Journal of psychology",
-                "volume":"137",
-                "number":"5",
-                "pages":"421--434",
-                "year":"2003",
-                "publisher":"Taylor & Francis"
-            }
+                "title": "Procrastination at work and time management training",
+                "author": "Eerde, Wendelien Van",
+                "journal": "The Journal of psychology",
+                "volume": "137",
+                "number": "5",
+                "pages": "421--434",
+                "year": "2003",
+                "publisher": "Taylor & Francis",
+            },
         )
 
         create_citation(
             "inproceedings",
             {
-                "title":("Examining the role of self-regulated "
-                         "learning on introductory programming performance"
-                         ),
-                "author":"Bergin, Susan and Reilly, Ronan and Traynor, Desmond",
-                "booktitle":("Proceedings of the first international workshop "
-                             "on Computing education research"
+                "title": (
+                    "Examining the role of self-regulated "
+                    "learning on introductory programming performance"
                 ),
-                "pages":"81--86",
-                "year":"2005"
-            }
+                "author": "Bergin, Susan and Reilly, Ronan and Traynor, Desmond",
+                "booktitle": (
+                    "Proceedings of the first international workshop "
+                    "on Computing education research"
+                ),
+                "pages": "81--86",
+                "year": "2005",
+            },
         )
         return redirect("/")
