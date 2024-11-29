@@ -79,17 +79,20 @@ def generate_valid_bibtex_entry(citation):
 
 
 def get_citation_by_doi(doi):
-    print(doi)
     url = f"https://doi.org/{doi}"
     headers = {"accept": "application/x-bibtex"}
 
     response = requests.get(url, headers=headers, timeout=15)
-    if response.status_code == 200:
+    content_type = response.headers["content-type"]
+    if response.status_code == 200 and content_type == "application/x-bibtex":
         bibtex_entry = response.text.strip()
-        parsed_entry = bibtexparser.parse_string(bibtex_entry).entries[0]
-        fields = {field.key:field.value for field in parsed_entry.fields}
+        try:
+            parsed_entry = bibtexparser.parse_string(bibtex_entry).entries[0]
+        except IndexError:
+            return None
+        fields = {field.key: field.value for field in parsed_entry.fields}
 
-        return {"citation_type":parsed_entry.entry_type, "fields":fields}
+        return {"citation_type": parsed_entry.entry_type, "fields": fields}
 
     return None
 
