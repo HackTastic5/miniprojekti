@@ -16,6 +16,7 @@ getenv = "^0.2.0"
 psycopg2-binary = "^2.9.10"
 requests = "^2.32.3"
 bibtexparser = "2.0.0b3"
+google-generativeai = "^0.8.3"
 
 
 [tool.poetry.group.dev.dependencies]

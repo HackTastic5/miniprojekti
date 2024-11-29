@@ -1,3 +1,4 @@
+import google.generativeai as genai
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import (
@@ -9,8 +10,9 @@ from repositories.citation_repository import (
     export_all_citations,
     get_citation_by_doi
 )
-from config import app, test_env
+from config import app, test_env, model
 from util import validate_field, UserInputError
+
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -38,6 +40,37 @@ def index():
         editing_id=editing_id,
         all_citation_types=all_citation_types,
     )
+
+@app.route("/ai", methods=["GET", "POST"])
+def helper():
+    citation_type = None
+    fields = {}
+    all_citation_types = get_citation_types()
+    counter=0
+    
+    if request.method == "POST":
+        prompt = request.form.get("ai_prompt")
+        print(prompt)
+        response = model.generate_content(f"Give any DOI number for an article that is related to {prompt}, give me just the doi number and nothing else")
+        print(response.text)
+        doi_result= get_citation_by_doi(response.text)
+        print(doi_result)
+        while doi_result == None and counter < 5:
+            response = model.generate_content(f"Give me a different DOI number, i couldn't find that one. Just a DOI number and nothing else")
+            print(response.text)
+            doi_result= get_citation_by_doi(response.text)
+            counter +=1
+        
+        if counter < 5: #avoid infinite loops
+            citation_type = doi_result["citation_type"]
+            fields = doi_result["fields"]
+        
+        
+    
+    return render_template("ai.html",
+        citation_type=citation_type,
+        fields=fields,
+        all_citation_types=all_citation_types,)
 
 
 @app.route("/create_citation", methods=["POST"])
