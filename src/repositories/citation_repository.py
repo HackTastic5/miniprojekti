@@ -1,4 +1,6 @@
 import os
+import requests
+import bibtexparser
 from sqlalchemy import text
 from config import db
 
@@ -74,6 +76,22 @@ def generate_valid_bibtex_entry(citation):
     bib = bib[:-1] + "\n}\n\n"
 
     return bib
+
+
+def get_citation_by_doi(doi):
+    print(doi)
+    url = f"https://doi.org/{doi}"
+    headers = {"accept": "application/x-bibtex"}
+
+    response = requests.get(url, headers=headers, timeout=15)
+    if response.status_code == 200:
+        bibtex_entry = response.text.strip()
+        parsed_entry = bibtexparser.parse_string(bibtex_entry).entries[0]
+        fields = {field.key:field.value for field in parsed_entry.fields}
+
+        return {"citation_type":parsed_entry.entry_type, "fields":fields}
+
+    return None
 
 
 def export_all_citations(bibname):
