@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, jsonify, flash
+import pathvalidate
 from db_helper import reset_db
 from repositories.citation_repository import (
     get_citations,
@@ -11,7 +12,6 @@ from repositories.citation_repository import (
 )
 from config import app, test_env, model
 from util import validate_field, UserInputError
-import pathvalidate
 
 
 @app.route("/", methods=["GET", "POST"])
