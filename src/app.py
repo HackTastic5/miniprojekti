@@ -11,6 +11,7 @@ from repositories.citation_repository import (
 )
 from config import app, test_env, model
 from util import validate_field, UserInputError
+import pathvalidate
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -124,9 +125,14 @@ def export_citations():
     try:
         export_all_citations(bib_name)
         return redirect("/")
-    except FileExistsError as error:
-        print(error)
-        flash(str(error))
+    except pathvalidate.error.ValidationError as error1:
+        #Still shows the successful alert for now
+        print(error1)
+        flash(str(error1))
+        return redirect("/")
+    except FileExistsError as error2:
+        print(error2)
+        flash(str(error2))
         return redirect("/")
 
 

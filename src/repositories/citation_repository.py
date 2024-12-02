@@ -1,6 +1,7 @@
 import os
 import requests
 import bibtexparser
+import pathvalidate
 from sqlalchemy import text
 from config import db
 
@@ -99,6 +100,8 @@ def get_citation_by_doi(doi):
 
 def export_all_citations(bibname):
     bibname = str(bibname) + ".bib"
+    if not pathvalidate.validate_filename(bibname):
+        raise pathvalidate.error.ValidationError("The file name is not valid")
     citations = get_citations()
     this_path = os.path.dirname(__file__)
     true_path = os.path.join(this_path, "..", "..", "data", bibname)
