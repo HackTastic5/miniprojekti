@@ -114,6 +114,8 @@ def export_all_citations(bibname):
             write_string += generate_valid_bibtex_entry(citation)
         file.write(write_string)
 
+    return true_path
+
 
 def update_citation(data):
     # Currently updates all fields that have a value

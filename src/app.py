@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, jsonify, flash
+from flask import redirect, render_template, request, jsonify, flash, send_file
 import pathvalidate
 from db_helper import reset_db
 from repositories.citation_repository import (
@@ -123,10 +123,11 @@ def export_citations():
     bib_name = request.form.get("bibname")
 
     try:
-        export_all_citations(bib_name)
-        return redirect("/")
+        # TODO: send bibtex without creating a file
+        path = export_all_citations(bib_name)
+        return send_file(path)
     except pathvalidate.error.ValidationError as error1:
-        #Still shows the successful alert for now
+        # Still shows the successful alert for now
         print(error1)
         flash(str(error1))
         return redirect("/")
