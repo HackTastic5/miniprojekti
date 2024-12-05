@@ -78,9 +78,15 @@ Citation helper
       <input type="text" name="bibname" placeholder="Bib file name" id="bibname">
       <br>
       <button type="submit">
-        Generate Bib file
+        Download Bib file
       </button>
     </form>
+      <button type="button" id="copyButton" onclick="copyBib()" hidden>
+        Copy to clipboard
+      </button>
+      <br>
+      <br>
+      <textarea id="bibtex" rows="26" cols="64" readonly>{{ bibtex }}</textarea>
   </div>
 </div>
 

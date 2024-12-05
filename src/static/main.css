@@ -34,6 +34,7 @@ h1 {
     padding-left: 50px;
     background-color: #dce2f0;
     border-left: 8px solid #6a7284;
+    box-sizing: border-box;
     overflow-y: auto;
 }
 
