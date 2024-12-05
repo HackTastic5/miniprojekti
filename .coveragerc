@@ -7,3 +7,4 @@ omit =
     src/templates/**
     src/index.py
     src/db_helper.py
+    src/app.py
