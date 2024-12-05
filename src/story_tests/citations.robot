@@ -134,6 +134,6 @@ Filtering works
 DOI search works
     Go To  ${HOME_URL}
     Input Text  doi  10.1126/science.169.3946.635
-    Click Button  DOI-search
+    Click Button  Search
     Page Should Contain  Enter a new citation
     Textfield Value Should Be  author  Frank, Henry S.

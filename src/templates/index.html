@@ -1,139 +1,156 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Citation app
+Citation helper
 {% endblock %}
 
 {% block body %}
 
-<h1>Citation helper</h1>
+<div class="main-container">
+  <h1>Citation helper</h1>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-  <ul>
-  {% for message in messages %}
-    <li>{{ message }}</li>
-  {% endfor %}
-  </ul>
-{% endif %}
-{% endwith %}
-
-<form action="/" method="post">
-  <select name="citation_type" required>
-    {% for ctype in all_citation_types %}
-      <option value="{{ ctype }}" {% if ctype == citation_type %}selected{% endif %}>{{ ctype }}</option>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
     {% endfor %}
-  </select>
+    </ul>
+  {% endif %}
+  {% endwith %}
 
-  <input type="submit" value="Select">
-</form>
+  <form action="/" method="post">
+    <select name="citation_type" required>
+      {% for ctype in all_citation_types %}
+        <option value="{{ ctype }}" {% if ctype == citation_type %}selected{% endif %}>{{ ctype }}</option>
+      {% endfor %}
+    </select>
 
-<p>OR</p>
-
-<form action="/" method="post">
-  <input type="text" id="doi" name="doi" placeholder="doi" required>
-  <input type="submit" value="DOI-search">
-</form>
-
-{% if citation_type %}
-  <h2>{{ citation_type }}</h2>
-
-  <form action="/create_citation" method="post">
-    <label for="content">Enter a new citation:</label>
-    <input type="hidden" name="citation_type" value="{{ citation_type }}">
-    <br/>
-    <p>Required fields:</p>
-    {% for field in all_citation_types[citation_type]["required"] %}
-    <input type="text" name="{{ field }}"
-    {% if field in fields %}
-    value="{{ fields[field] }}"
-    {% endif %}
-    placeholder="{{ field }}" required>
     <br>
-    {% endfor %}
-    
-    <p>Optional fields:</p>
-    {% for field in all_citation_types[citation_type]["optional"] %}
-    <input type="text" name="{{ field }}"
-    {% if field in fields %}
-    value="{{ fields[field] }}"
-    {% endif %}
-    placeholder="{{ field }}">
-    <br>
-    {% endfor %}
-    
-    <button type="submit">
-      Create
-    </button>
+    <input type="submit" value="Select">
   </form>
 
-{% endif %}
+  <p>OR</p>
 
-<h4>Citations:</h4>
-<input type="text" id="filter" placeholder="Filter citations" />
-<ul id="citationlist">
-  {% for citation in citations %}
-  <li style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
-    {% if citation.id == editing_id %}
+  <form action="/" method="post">
+    <input type="text" id="doi" name="doi" placeholder="DOI" required>
+    <br>
+    <input type="submit" value="Search">
+  </form>
 
-      <p><b>Editing</b> {{ citation }}:</p>
-        {# Changing citation type is currently not supported #}
-        <p>Citation type: {{ citation.citation_type }}</p>
-        <form action="/update_citation" method="post">
-        <input type="hidden" name="citation_id" value="{{ citation.id }}">
-        <p>Required fields:</p>
-        {% for field in all_citation_types[citation.citation_type]["required"] %}
-          <input type="text" name="{{ field }}"
-           {% if field in citation.fields %}
-           value="{{ citation.fields[field] }}"
-           {% endif %}
-           placeholder="{{ field }}" required />
-          <br>
-        {% endfor %}
-        <p>Optional fields:</p>
-        {% for field in all_citation_types[citation.citation_type]["optional"] %}
-          <input type="text" name="{{ field }}"
-           {% if field in citation.fields %}
-           value="{{ citation.fields[field] }}"
-           {% endif %}
-           placeholder="{{ field }}" />
-          <br>
-        {% endfor %}
-        <input type="submit" value="Submit">
-        <a href="/"><input type="button" value="Cancel" /></a>
-        </form>
+  {% if citation_type %}
+    <h2>{{ citation_type }}</h2>
 
-    {% else %}
+    <form action="/create_citation" method="post">
+      <label for="content">Enter a new citation:</label>
+      <input type="hidden" name="citation_type" value="{{ citation_type }}">
+      <br/>
+      <p>Required fields:</p>
+      {% for field in all_citation_types[citation_type]["required"] %}
+      <input type="text" name="{{ field }}"
+      {% if field in fields %}
+      value="{{ fields[field] }}"
+      {% endif %}
+      placeholder="{{ field }}" required>
+      <br>
+      {% endfor %}
+      
+      <p>Optional fields:</p>
+      {% for field in all_citation_types[citation_type]["optional"] %}
+      <input type="text" name="{{ field }}"
+      {% if field in fields %}
+      value="{{ fields[field] }}"
+      {% endif %}
+      placeholder="{{ field }}">
+      <br>
+      {% endfor %}
+      
+      <button type="submit">
+        Create
+      </button>
+    </form>
 
-    <details>
-      <summary>
-        <span class="citation_title">{{citation}}</span>
-        <form action="/delete_citation" method="post">
+  {% endif %}
+
+  <div style="margin-top: 1rem;">
+    <form action="/export_citations" method="post" onsubmit=" return MyFunction()">
+      <hr>
+      <input type="text" name="bibname" placeholder="Bib file name" id="bibname">
+      <br>
+      <button type="submit">
+        Generate Bib file
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="citation-container">
+  <h4>Citations:</h4>
+  <input type="text" id="filter" placeholder="Filter citations" />
+  <ul id="citation-list">
+    {% for citation in citations %}
+    <li style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
+      {% if citation.id == editing_id %}
+
+        <p><b>Editing</b> {{ citation }}:</p>
+          {# Changing citation type is currently not supported #}
+          <p>Citation type: {{ citation.citation_type }}</p>
+          <form action="/update_citation" method="post">
           <input type="hidden" name="citation_id" value="{{ citation.id }}">
-          <input type="submit" value="Delete">
-        </form>
-        <form action="/" method="post">
-          <input type="hidden" name="editing_id" value="{{ citation.id }}">
-          <input type="submit" value="Edit">
-        </form>
-      </summary>
-      <div style="margin-left: 20px; margin-top: 5px;">
-        {% for field in citation.fields %}
-          <p><strong>{{ field.capitalize() }}:</strong> {{ citation.fields[field] }}</p>
-        {% endfor %}
-      </div>
-    </details>
+          <p>Required fields:</p>
+          {% for field in all_citation_types[citation.citation_type]["required"] %}
+            <input type="text" name="{{ field }}"
+            {% if field in citation.fields %}
+            value="{{ citation.fields[field] }}"
+            {% endif %}
+            placeholder="{{ field }}" required />
+            <br>
+          {% endfor %}
+          <p>Optional fields:</p>
+          {% for field in all_citation_types[citation.citation_type]["optional"] %}
+            <input type="text" name="{{ field }}"
+            {% if field in citation.fields %}
+            value="{{ citation.fields[field] }}"
+            {% endif %}
+            placeholder="{{ field }}" />
+            <br>
+          {% endfor %}
+          <input type="submit" value="Submit">
+          <a href="/"><input type="button" value="Cancel" /></a>
+          </form>
 
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
+      {% else %}
+
+      <details>
+        <summary>
+          <span class="citation_title">{{citation}}</span>
+          <form action="/delete_citation" method="post">
+            <input type="hidden" name="citation_id" value="{{ citation.id }}">
+            <input type="submit" value="Delete">
+          </form>
+          <form action="/" method="post">
+            <input type="hidden" name="editing_id" value="{{ citation.id }}">
+            <input type="submit" value="Edit">
+          </form>
+        </summary>
+        <div style="margin-left: 20px; margin-top: 5px;">
+          {% for field in citation.fields %}
+            <p><strong>{{ field.capitalize() }}:</strong> {{ citation.fields[field] }}</p>
+          {% endfor %}
+        </div>
+      </details>
+
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 
 <script>
   document.getElementById('filter').addEventListener('input', function(){
     console.log(this.value)
     const filter = (this.value).toLowerCase();
-    const items = document.querySelectorAll('#citationlist li');
+    const items = document.querySelectorAll('#citation-list li');
 
 
     items.forEach(function(item) {
@@ -147,25 +164,7 @@ Citation app
       }
     })
   })
-
-
 </script>
-
-<div style="margin-top: 1rem;">
-  <form action="/export_citations" method="post" onsubmit=" return MyFunction()">
-    <input type="text" name="bibname" placeholder="Bib file name" id="bibname">
-    <br/>
-    <button type="submit">
-      Download Bib file
-    </button>
-  </form>
-    <button type="button" id="copyButton" onclick="copyBib()" hidden>
-        Copy to clipboard
-    </button>
-    <br/>
-    <textarea id="bibtex" rows="32" cols="64" readonly>{{ bibtex }}</textarea>
-</div>
-
 
 <script>
   function MyFunction() {

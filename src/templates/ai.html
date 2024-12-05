@@ -1,53 +1,56 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Citation app
+AI helper
 {% endblock %}
 
 {% block body %}
 
-<h1>AI helper</h1>
-<div>
-  <form action="/ai" method="post">
-    <input type="text" placeholder="prompt" name="ai_prompt" />
-    <button type="submit">submit</button>
-  </form>
+<div class="main-container">
+  <h1>AI helper</h1>
+  <div>
+    <form action="/ai" method="post">
+      <input type="text" placeholder="Prompt" name="ai_prompt" />
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    {% if citation_type %}
+    <h2>{{ citation_type }}</h2>
+
+    <form action="/create_citation" method="post">
+      <label for="content">Enter a new citation:</label>
+      <input type="hidden" name="citation_type" value="{{ citation_type }}">
+      <br/>
+      <p>Required fields:</p>
+      {% for field in all_citation_types[citation_type]["required"] %}
+      <input type="text" name="{{ field }}"
+      {% if field in fields %}
+      value="{{ fields[field] }}"
+      {% endif %}
+      placeholder="{{ field }}" required>
+      <br>
+      {% endfor %}
+      
+      <p>Optional fields:</p>
+      {% for field in all_citation_types[citation_type]["optional"] %}
+      <input type="text" name="{{ field }}"
+      {% if field in fields %}
+      value="{{ fields[field] }}"
+      {% endif %}
+      placeholder="{{ field }}">
+      <br>
+      {% endfor %}
+      
+      <br>
+      <button type="submit">
+        Create
+      </button>
+    </form>
+
+  {% endif %}
+  </div>
 </div>
-<div>
-  {% if citation_type %}
-  <h2>{{ citation_type }}</h2>
-
-  <form action="/create_citation" method="post">
-    <label for="content">Enter a new citation:</label>
-    <input type="hidden" name="citation_type" value="{{ citation_type }}">
-    <br/>
-    <p>Required fields:</p>
-    {% for field in all_citation_types[citation_type]["required"] %}
-    <input type="text" name="{{ field }}"
-    {% if field in fields %}
-    value="{{ fields[field] }}"
-    {% endif %}
-    placeholder="{{ field }}" required>
-    <br>
-    {% endfor %}
-    
-    <p>Optional fields:</p>
-    {% for field in all_citation_types[citation_type]["optional"] %}
-    <input type="text" name="{{ field }}"
-    {% if field in fields %}
-    value="{{ fields[field] }}"
-    {% endif %}
-    placeholder="{{ field }}">
-    <br>
-    {% endfor %}
-    
-    <button type="submit">
-      Create
-    </button>
-  </form>
-
-{% endif %}
-</div>
-
 
 {% endblock %}
