@@ -1,6 +1,5 @@
 from io import BytesIO
 from flask import redirect, render_template, request, jsonify, flash, send_file
-import pathvalidate
 from db_helper import reset_db
 from repositories.citation_repository import (
     get_citations,
@@ -125,14 +124,6 @@ def edit_citation():
 def export_citations():
     bibname = request.form.get("bibname") + ".bib"
     bibtex = export_all_citations()
-
-    try:
-        pathvalidate.validate_filename(bibname)
-    except pathvalidate.error.ValidationError as error1:
-        # Still shows the successful alert for now
-        print(error1)
-        flash(str(error1))
-        return redirect("/")
 
     bibfile = BytesIO()
     bibfile.write(bibtex.encode("utf-8"))

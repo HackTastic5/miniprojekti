@@ -180,7 +180,13 @@ Citation helper
       alert("Please enter a Bib file name.");
       return false; 
     }
-
+    
+    var regex=/^[a-zA-Z0-9]+$/;
+    if (!bibnameInput.match(regex))
+    {
+      alert("Must input valid file name");
+      return false;
+    }
   }
 
   document.getElementById("copyButton").hidden = false;
