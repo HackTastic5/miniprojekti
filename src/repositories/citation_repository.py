@@ -7,7 +7,7 @@ from entities.citation import Citation
 
 
 def get_citations():
-    result = db.session.execute(text("SELECT * FROM citations"))
+    result = db.session.execute(text("SELECT * FROM citations ORDER BY id"))
     citations = result.fetchall()
     return [
         Citation(
