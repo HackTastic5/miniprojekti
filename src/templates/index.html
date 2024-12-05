@@ -156,10 +156,13 @@ Citation app
     <input type="text" name="bibname" placeholder="Bib file name" id="bibname">
     <br/>
     <button type="submit">
-      Generate Bib file
+      Download Bib file
     </button>
   </form>
+    <br/>
+    <textarea id="bibtex" rows="32" cols="64" readonly>{{ bibtex }}</textarea>
 </div>
+
 
 <script>
   function MyFunction() {
@@ -169,9 +172,6 @@ Citation app
       alert("Please enter a Bib file name.");
       return false; 
     }
-    
-    alert("The Bibtex file has been generated and can be found in the app's data directory");
-    return true; 
   }
 </script>
 

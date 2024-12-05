@@ -22,6 +22,7 @@ def index():
     citation_type = None
     fields = {}
     editing_id = -1
+    bibtex = export_all_citations()
 
     if request.method == "POST":
         citation_type = request.form.get("citation_type")
@@ -42,6 +43,7 @@ def index():
         fields=fields,
         editing_id=editing_id,
         all_citation_types=all_citation_types,
+        bibtex=bibtex,
     )
 
 
@@ -116,11 +118,6 @@ def citation_deletion():
 def edit_citation():
     update_citation(request.form.to_dict())
 
-    return redirect("/")
-
-
-@app.route("/view_bibtex", methods=["GET"])
-def view_bibtex():
     return redirect("/")
 
 
