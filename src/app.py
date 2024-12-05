@@ -127,26 +127,26 @@ def view_bibtex():
 @app.route("/export_citations", methods=["POST"])
 def export_citations():
     bibname = request.form.get("bibname") + ".bib"
+    bibtex = export_all_citations()
 
     try:
-        bibtex = export_all_citations()
         pathvalidate.validate_filename(bibname)
-
-        bibfile = BytesIO()
-        bibfile.write(bibtex.encode("utf-8"))
-        bibfile.seek(0)
-
-        return send_file(
-            bibfile,
-            download_name=bibname,
-            mimetype="application/x-bibtex",
-            as_attachment=True,
-        )
     except pathvalidate.error.ValidationError as error1:
         # Still shows the successful alert for now
         print(error1)
         flash(str(error1))
         return redirect("/")
+
+    bibfile = BytesIO()
+    bibfile.write(bibtex.encode("utf-8"))
+    bibfile.seek(0)
+
+    return send_file(
+        bibfile,
+        download_name=bibname,
+        mimetype="application/x-bibtex",
+        as_attachment=True,
+    )
 
 
 # testausta varten oleva reitti
