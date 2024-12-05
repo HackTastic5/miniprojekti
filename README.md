@@ -3,6 +3,7 @@
 ## BibTeX-sitaattigeneraattori
 
 [![GHA workflow badge](https://github.com/HackTastic5/miniprojekti/workflows/CI/badge.svg)](https://github.com/HackTastic5/miniprojekti/actions)
+[![codecov](https://codecov.io/gh/HackTastic5/miniprojekti/graph/badge.svg?token=F2GG5KIBIS)](https://codecov.io/gh/HackTastic5/miniprojekti)
 
 [Product backlog ja sprint backlogit](https://docs.google.com/spreadsheets/d/1cBhyVR3Zbdce5GyGX__jlB-rGVCpWYUqm5k0h3NEfdI)
 
