@@ -6,3 +6,4 @@ omit =
     src/story_tests/**
     src/templates/**
     src/index.py
+    src/db_helper.py
