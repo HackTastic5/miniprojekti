@@ -52,6 +52,14 @@ Käynnistä sovellus virtuaaliympäristössä seuraavasti:
 $ python src/index.py
 ```
 
+## Tekoälyavustaja
+
+Sovelluksesta löytyy kokeiluvaiheessa oleva tekoälyä hyödyntävä työkalu, jonka avulla voi saada lähde-ehdotuksia toivottuun aihepiiriin liittyen.
+Työkalu toimii tällä hetkellä vain joillakin syötteillä. Jos haluat kokeilla työkalua, [generoi itsellesi API-avain](https://aistudio.google.com/app/apikey) Google Geminiin ja lisää se .env-tiedostoon:
+```
+GOOGLE_API_KEY=<avain>
+```
+
 ## Definition of done
 
 Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon. 
