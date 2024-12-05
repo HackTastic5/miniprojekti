@@ -1,0 +1,8 @@
+[run]
+source = src
+
+omit = 
+    src/tests/**
+    src/story_tests/**
+    src/templates/**
+    src/index.py

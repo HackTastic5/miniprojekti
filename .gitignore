@@ -7,3 +7,5 @@ output.xml
 report.html
 *.png
 .idea
+.coverage
+htmlcov
