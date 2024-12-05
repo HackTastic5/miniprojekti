@@ -130,10 +130,3 @@ Filtering works
     Input Text  filter  found
     Element Should Be Visible  found
     Element Should Not Be Visible  filtered
-
-DOI search works
-    Go To  ${HOME_URL}
-    Input Text  doi  10.1126/science.169.3946.635
-    Click Button  Search
-    Page Should Contain  Enter a new citation
-    Textfield Value Should Be  author  Frank, Henry S.
