@@ -1,7 +1,5 @@
-import os
 import requests
 import bibtexparser
-import pathvalidate
 from sqlalchemy import text
 from config import db
 
@@ -98,23 +96,14 @@ def get_citation_by_doi(doi):
     return None
 
 
-def export_all_citations(bibname):
-    bibname = str(bibname) + ".bib"
-    pathvalidate.validate_filename(bibname)
+def export_all_citations():
     citations = get_citations()
-    this_path = os.path.dirname(__file__)
-    true_path = os.path.join(this_path, "..", "..", "data", bibname)
 
-    if os.path.exists(true_path):
-        raise FileExistsError(f"The file {bibname} was overwritten")
+    write_string = ""
+    for citation in citations:
+        write_string += generate_valid_bibtex_entry(citation)
 
-    with open(true_path, "w", encoding="utf-8") as file:
-        write_string = ""
-        for citation in citations:
-            write_string += generate_valid_bibtex_entry(citation)
-        file.write(write_string)
-
-    return true_path
+    return write_string
 
 
 def update_citation(data):

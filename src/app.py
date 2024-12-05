@@ -1,3 +1,4 @@
+from io import BytesIO
 from flask import redirect, render_template, request, jsonify, flash, send_file
 import pathvalidate
 from db_helper import reset_db
@@ -118,22 +119,33 @@ def edit_citation():
     return redirect("/")
 
 
+@app.route("/view_bibtex", methods=["GET"])
+def view_bibtex():
+    return redirect("/")
+
+
 @app.route("/export_citations", methods=["POST"])
 def export_citations():
-    bib_name = request.form.get("bibname")
+    bibname = request.form.get("bibname") + ".bib"
 
     try:
-        # TODO: send bibtex without creating a file
-        path = export_all_citations(bib_name)
-        return send_file(path)
+        bibtex = export_all_citations()
+        pathvalidate.validate_filename(bibname)
+
+        bibfile = BytesIO()
+        bibfile.write(bibtex.encode("utf-8"))
+        bibfile.seek(0)
+
+        return send_file(
+            bibfile,
+            download_name=bibname,
+            mimetype="application/x-bibtex",
+            as_attachment=True,
+        )
     except pathvalidate.error.ValidationError as error1:
         # Still shows the successful alert for now
         print(error1)
         flash(str(error1))
-        return redirect("/")
-    except FileExistsError as error2:
-        print(error2)
-        flash(str(error2))
         return redirect("/")
 
 
