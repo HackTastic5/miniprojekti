@@ -107,14 +107,8 @@ def export_all_citations():
 
 
 def update_citation(data):
-    # Currently updates all fields that have a value
-    # even if they haven't actually changed.
-    # Could maybe rework to exclude them,
-    # but it's probably not necessary
-    fields_to_update = []
-    for key, value in data.items():
-        if len(value) > 0 and key != "citation_id":
-            fields_to_update.append(key)
+    fields_to_update = list(data.keys())
+    fields_to_update.remove("citation_id")
 
     sql = text(
         "UPDATE citations "
