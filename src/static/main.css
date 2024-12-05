@@ -15,7 +15,6 @@ body {
     display: flex;
     justify-content: space-between;
     background-color: #50586c;
-    overflow: hidden;
 }
 
 h1 {

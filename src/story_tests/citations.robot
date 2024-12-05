@@ -7,7 +7,7 @@ Test Setup       Reset Citations
 *** Test Cases ***
 Loads at start
     Go To  ${HOME_URL}
-    Title Should Be  Citation app
+    Title Should Be  Citation helper
 
 
 After adding a citation, there is one
