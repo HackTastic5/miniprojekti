@@ -109,6 +109,9 @@ def export_all_citations():
 def update_citation(data):
     fields_to_update = list(data.keys())
     fields_to_update.remove("citation_id")
+    for key, value in data.items():
+        if value == "":
+            data[key] = None
 
     sql = text(
         "UPDATE citations "
