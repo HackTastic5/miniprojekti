@@ -1,3 +1,4 @@
+import unicodedata
 import requests
 import bibtexparser
 from sqlalchemy import text
@@ -49,20 +50,31 @@ def create_citation(citation_type, fields):
 # but if that changes this will have to be reworked
 def generate_citekey(author, title, year, cite_id):
     # Assuming in the final product that author is "Last_name, First_name Second_name"
-    # Example: {Smith, John: This is a book (2019)} = SmithTiab25_2019
+    # Example: {Smith, John: This is a book (2019)} and id 25 = SmithThis25_2019
     key = ""
+
     if author is not None:
         if "," in author:
             author = author.split(",")[0]
         key += author.replace(
             " ", ""
         )  # also works if the author is in format first_name last_name
-    if " " in title:
-        title = title.split(" ")
-    for i in title:
-        key += i[0]
-    key += str(cite_id)  # uses the citation id to ensure uniqueness
-    key += "_" + str(year)
+
+    title_part_len = 20
+    first_whitespace_index = title.find(" ", 0, title_part_len)
+    if first_whitespace_index != -1:
+        key += "".join(
+            c for c in title[:first_whitespace_index]
+            if unicodedata.category(c).startswith("L")
+        )
+    else:
+        key += "".join(
+            c for c in title[:title_part_len]
+            if unicodedata.category(c).startswith("L")
+        )
+
+    key += str(year)
+    key += "_" + str(cite_id)  # uses the citation id to ensure uniqueness
     return key
 
 
