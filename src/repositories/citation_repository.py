@@ -27,21 +27,21 @@ def get_citations():
     ]
 
 
-def create_citation(citation_type, fields):
-    fields.update({"citation_type": citation_type})
+def create_citation(citation_type, citation_fields):
+    citation_fields.update({"citation_type": citation_type})
 
     sql = text(
         "INSERT INTO citations"
-        f"({', '.join(key for key in fields.keys())})"
+        f"({', '.join(key for key in citation_fields.keys())})"
         "VALUES"
-        f"({', '.join(f':{key}' for key in fields.keys())})"
+        f"({', '.join(f':{key}' for key in citation_fields.keys())})"
     )
     db.session.execute(
         sql,
-        fields,
+        citation_fields,
     )
 
-    print(fields)
+    print(citation_fields)
     db.session.commit()
 
 
