@@ -21,7 +21,7 @@ Citation helper
 
   <h2 class="main-text">Add a new citation</h2>
 
-  <form action="/" method="post">
+  <form action="/#create" method="post">
     <select name="citation_type" required>
       {% for ctype in all_citation_types %}
         <option value="{{ ctype }}" {% if ctype == citation_type %}selected{% endif %}>{{ ctype }}</option>
@@ -33,7 +33,7 @@ Citation helper
 
   <p class="main-text">OR</p>
 
-  <form action="/" method="post">
+  <form action="/#create" method="post">
     <input type="text" id="doi" name="doi" placeholder="DOI" size="30" required>
     <input type="submit" value="Search">
   </form>
@@ -42,7 +42,7 @@ Citation helper
 
   <a href="/ai"><input type="button" value="AI helper (beta)"/></a>
   {% if citation_type %}
-    <h2 class="main-text">{{ citation_type.capitalize() }}</h2>
+    <h2 id="create" class="main-text">{{ citation_type.capitalize() }}</h2>
 
     <form action="/create_citation" method="post">
       <label class="main-text" for="content">Enter a new citation:</label>
@@ -102,7 +102,7 @@ Citation helper
   <input type="text" id="filter" placeholder="Filter citations" size="30"/>
   <ul id="citation-list">
     {% for citation in citations %}
-    <li style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
+    <li id="{{ citation.id }}" style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
       {% if citation.id == editing_id %}
 
         <p><b>Editing</b> {{ citation }}:</p>
@@ -141,7 +141,7 @@ Citation helper
             <input type="hidden" name="citation_id" value="{{ citation.id }}">
             <input type="submit" value="Delete">
           </form>
-          <form action="/" method="post">
+          <form action="/#{{ citation.id }}" method="post">
             <input type="hidden" name="editing_id" value="{{ citation.id }}">
             <input type="submit" value="Edit">
           </form>
