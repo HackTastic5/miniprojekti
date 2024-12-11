@@ -25,7 +25,7 @@ def index():
 
     if request.method == "POST":
         citation_type = request.form.get("citation_type")
-        editing_id = int(request.form.get("editing_id") or -1)
+        editing_id = request.form.get("editing_id", -1, type=int)
         doi = request.form.get("doi")
         if doi:
             doi_result = get_citation_by_doi(doi)
