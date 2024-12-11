@@ -5,19 +5,68 @@
     font-family: 'Poppins', sans-serif;
 }
 
-html, body {
+body {
     margin: 0;
     padding: 0;
-}
-
-body {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     background-color: #50586c;
     overflow-y: auto;
 }
 
-h1 {
+button, input[type="button"], input[type="submit"] {
+    background-color: #d1d6df;
+    border: 1px solid #000;
+    margin-top: 8px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+    background-color: #b8bec9;
+}
+
+input[type="text"] {
+    border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #b8bec9;
+    outline: none;
+}
+
+select {
+    border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+}
+
+textarea#bibtex {
+    border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.main-text {
     color: #dce2f0;
 }
 
@@ -27,13 +76,12 @@ h1 {
 }
 
 .citation-container {
-    width: 800px;
+    width: 45%;
     min-height: 100%;
     height: auto;
     padding-top: 10px;
     padding-left: 50px;
     background-color: #dce2f0;
-    border-left: 8px solid #6a7284;
     box-sizing: border-box;
     overflow-y: auto;
 }
