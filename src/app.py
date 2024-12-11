@@ -16,7 +16,10 @@ from util import validate_field, UserInputError
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    citations = get_citations()
+    sort = request.args.get("sort")
+    desc = request.args.get("desc", type=bool)
+
+    citations = get_citations(sort, desc)
     all_citation_types = get_citation_types()
     citation_type = None
     fields = {}

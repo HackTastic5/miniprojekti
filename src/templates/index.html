@@ -100,13 +100,24 @@ Citation helper
 <div class="citation-container">
   <h2>Citations:</h2>
   <input type="text" id="filter" placeholder="Filter citations" size="30"/>
+  <form method="get">
+    Sort by:
+      <button name="sort" value="id">Date added</button>
+      <button name="sort" value="date">Date published</button>
+      <button name="sort" value="author">Author</button>
+      <button name="sort" value="title">Title</button>
+      <label>
+        <input type="checkbox" name="desc" value="true" {% if request.args.get('desc') %}checked{% endif %}>
+          Descending order
+      </label>
+  </form><br/>
   <ul id="citation-list">
     {% for citation in citations %}
     <li id="{{ citation.id }}" style="margin-bottom: 1rem;" name="{{ citation.fields['title'] }}">
       {% if citation.id == editing_id %}
 
         <p><b>Editing</b> {{ citation }}:</p>
-          {# Changing citation type is currently not supported #}
+          {# Changing citation type is not supported #}
           <p>Citation type: {{ citation.citation_type }}</p>
           <form action="/update_citation" method="post">
           <input type="hidden" name="citation_id" value="{{ citation.id }}">

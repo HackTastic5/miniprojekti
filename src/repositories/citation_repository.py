@@ -7,8 +7,20 @@ from config import db
 from entities.citation import Citation
 
 
-def get_citations():
-    result = db.session.execute(text("SELECT * FROM citations ORDER BY id"))
+def get_citations(sort=None, desc=False):
+    order = "DESC" if desc else "ASC"
+
+    match sort:
+        case "author":
+            sortkey = f"author {order}"
+        case "title":
+            sortkey = f"title {order}"
+        case "date":
+            sortkey = f"year::int {order}, month::int {order}"
+        case _:
+            sortkey = f"id {order}"
+
+    result = db.session.execute(text(f"SELECT * FROM citations ORDER BY {sortkey}"))
     citations = result.fetchall()
     return [
         Citation(
@@ -64,13 +76,13 @@ def generate_citekey(author, title, year, cite_id):
     first_whitespace_index = title.find(" ", 0, title_part_len)
     if first_whitespace_index != -1:
         key += "".join(
-            c for c in title[:first_whitespace_index]
+            c
+            for c in title[:first_whitespace_index]
             if unicodedata.category(c).startswith("L")
         )
     else:
         key += "".join(
-            c for c in title[:title_part_len]
-            if unicodedata.category(c).startswith("L")
+            c for c in title[:title_part_len] if unicodedata.category(c).startswith("L")
         )
 
     key += str(year)
