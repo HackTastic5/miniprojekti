@@ -62,8 +62,4 @@ GOOGLE_API_KEY=<avain>
 
 ## Definition of done
 
-Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon. 
-
-## Lisenssi
-
-Työ on lisensoitu [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) -lisenssillä.
+Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon.
