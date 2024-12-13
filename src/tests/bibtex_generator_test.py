@@ -1,5 +1,5 @@
 import unittest
-from repositories import citation_repository
+import util
 from entities.citation import Citation
 
 
@@ -8,12 +8,12 @@ class TestCitationRepository(unittest.TestCase):
         pass
 
     def test_generate_citekey_uses_author_title_year_id(self):
-        citekey = citation_repository.generate_citekey("Author", "Title", "2024", 1)
+        citekey = util.generate_citekey("Author", "Title", "2024", 1)
 
         self.assertEqual(citekey, "AuthorTitle2024_1")
 
     def test_generate_citekey_multiword_title_only_first_letters(self):
-        citekey = citation_repository.generate_citekey(
+        citekey = util.generate_citekey(
             "Author", "Title of Source", "2024", 1
         )
 
@@ -28,7 +28,7 @@ class TestCitationRepository(unittest.TestCase):
         }
         citation = Citation(1, "article", "AuthorTitle2024_1", fields)
 
-        tested_bibtex = citation_repository.generate_valid_bibtex_entry(citation)
+        tested_bibtex = util.generate_valid_bibtex_entry(citation)
 
         good_bibtex = (
             "@article{AuthorTitle2024_1,\n"
