@@ -103,9 +103,9 @@ Citation helper
   <form method="get">
     Sort by:
       <button name="sort" value="id">Date added</button>
-      <button name="sort" value="date">Date published</button>
       <button name="sort" value="author">Author</button>
       <button name="sort" value="title">Title</button>
+      <button name="sort" value="date">Year</button>
       <label>
         <input type="checkbox" name="desc" value="true" {% if request.args.get('desc') %}checked{% endif %}>
           Descending order

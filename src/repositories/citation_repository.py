@@ -16,7 +16,7 @@ def get_citations(sort=None, desc=False):
         case "title":
             sortkey = f"title {order}"
         case "date":
-            sortkey = f"year::int {order}, month::int {order}"
+            sortkey = f"year::int {order}"
         case _:
             sortkey = f"id {order}"
 
