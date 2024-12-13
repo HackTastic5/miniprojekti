@@ -108,7 +108,6 @@ def delete_citation(id):
     db.session.commit()
 
 
-# This has to be relocated
 def get_citation_types():
     citation_types = {
         "article": {

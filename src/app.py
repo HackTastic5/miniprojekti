@@ -54,7 +54,6 @@ def helper():
     citation_type = None
     fields = {}
     all_citation_types = get_citation_types()
-    ##counter=0
 
     if request.method == "POST":
         prompt = request.form.get("ai_prompt")
@@ -81,23 +80,19 @@ def helper():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
-    ##author = request.form.get("author")
     year = request.form.get("year")
     fields = {}
 
-    # Read the required fields
     for key in get_citation_types()[citation_type]["required"]:
         value = request.form.get(key)
         fields[key] = value
 
-    # Read the optional fields that exist
     for key in get_citation_types()[citation_type]["optional"]:
         value = request.form.get(key)
         if len(value) > 0:
             fields[key] = value
 
     try:
-        ##validate_field("author", author, min_len=5, max_len=40)
         validate_field("year", year, exact_len=4)
         create_citation(citation_type, fields)
         return redirect("/")
@@ -146,7 +141,6 @@ def export_citations():
     )
 
 
-# testausta varten oleva reitti
 if test_env:
 
     @app.route("/reset_db")

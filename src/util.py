@@ -18,9 +18,6 @@ def validate_field(field, value, min_len=None, max_len=None, exact_len=None):
         raise UserInputError(f"{field} length must be {exact_len}")
 
 
-# A null author is left out of the final key
-# Title and year have NOT NULL constraints
-# but if that changes this will have to be reworked
 def generate_citekey(author, title, year, cite_id):
     # Assuming in the final product that author is "Last_name, First_name Second_name"
     # Example: {Smith, John: This is a book (2019)} and id 25 = SmithThis25_2019

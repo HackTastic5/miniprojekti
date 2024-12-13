@@ -120,7 +120,6 @@ Citation helper
       {% if citation.id == editing_id %}
 
         <p><b>Editing</b> {{ citation }}:</p>
-          {# Changing citation type is not supported #}
           <p>Citation type: {{ citation.citation_type }}</p>
           <form action="/update_citation" method="post">
           <input type="hidden" name="citation_id" value="{{ citation.id }}">
