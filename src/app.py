@@ -118,9 +118,15 @@ def citation_deletion():
 
 @app.route("/update_citation", methods=["POST"])
 def edit_citation():
-    update_citation(request.form.to_dict())
-
-    return redirect("/")
+    data = request.form.to_dict()
+    try:
+        validate_field("year", data["year"], exact_len=4)
+        update_citation(data)
+        return redirect("/")
+    except UserInputError as error:
+        print(error)
+        flash(str(error))
+        return redirect("/")
 
 
 @app.route("/export_citations", methods=["POST"])

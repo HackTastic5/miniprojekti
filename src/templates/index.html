@@ -54,6 +54,9 @@ Citation helper
       {% if field in fields %}
       value="{{ fields[field] }}"
       {% endif %}
+      {% if field == "year" %}
+      pattern="^\d{4}$"
+      {% endif %}
       placeholder="{{ field.capitalize() }}" required>
       <br>
       {% endfor %}
@@ -126,6 +129,9 @@ Citation helper
             <input type="text" name="{{ field }}" size="30"
             {% if field in citation.fields %}
             value="{{ citation.fields[field] }}"
+            {% endif %}
+            {% if field == "year" %}
+            pattern="^\d{4}$"
             {% endif %}
             placeholder="{{ field.capitalize() }}" required />
             <br>
