@@ -6,4 +6,4 @@ class Citation:
         self.fields = fields
 
     def __str__(self):
-        return f"{self.fields.get('title')} by {self.fields.get('author')}{{{self.citekey}}}"
+        return f"{self.fields.get('title')} by {self.fields.get('author')} {{{self.citekey}}}"
