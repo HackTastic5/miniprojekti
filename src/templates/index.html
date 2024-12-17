@@ -83,7 +83,7 @@ Citation helper
   
   <div class="file-container">
     <div style="margin-top: 1rem;">
-      <form action="/export_citations" method="post" onsubmit=" return MyFunction()">
+      <form action="/export_citations" method="post" onsubmit=" return validateBibtexInput()">
         <input type="text" name="bibname" placeholder="Bib file name" id="bibname" size="30">
         <br>
         <button type="submit">
@@ -196,7 +196,7 @@ Citation helper
 </script>
 
 <script>
-  function MyFunction() {
+  function validateBibtexInput() {
     const bibnameInput = document.getElementById('bibname').value.trim();
     
     if (bibnameInput === '') {
