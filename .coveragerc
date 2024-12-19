@@ -8,3 +8,5 @@ omit =
     src/index.py
     src/db_helper.py
     src/app.py
+    src/config.py
+    src/repositories/**

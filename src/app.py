@@ -16,7 +16,10 @@ from util import validate_field, UserInputError
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    citations = get_citations()
+    sort = request.args.get("sort")
+    desc = request.args.get("desc", type=bool)
+
+    citations = get_citations(sort, desc)
     all_citation_types = get_citation_types()
     citation_type = None
     fields = {}
@@ -25,7 +28,7 @@ def index():
 
     if request.method == "POST":
         citation_type = request.form.get("citation_type")
-        editing_id = int(request.form.get("editing_id") or -1)
+        editing_id = request.form.get("editing_id", -1, type=int)
         doi = request.form.get("doi")
         if doi:
             doi_result = get_citation_by_doi(doi)
@@ -51,7 +54,6 @@ def helper():
     citation_type = None
     fields = {}
     all_citation_types = get_citation_types()
-    ##counter=0
 
     if request.method == "POST":
         prompt = request.form.get("ai_prompt")
@@ -78,23 +80,19 @@ def helper():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
-    ##author = request.form.get("author")
     year = request.form.get("year")
     fields = {}
 
-    # Read the required fields
     for key in get_citation_types()[citation_type]["required"]:
         value = request.form.get(key)
         fields[key] = value
 
-    # Read the optional fields that exist
     for key in get_citation_types()[citation_type]["optional"]:
         value = request.form.get(key)
         if len(value) > 0:
             fields[key] = value
 
     try:
-        ##validate_field("author", author, min_len=5, max_len=40)
         validate_field("year", year, exact_len=4)
         create_citation(citation_type, fields)
         return redirect("/")
@@ -115,9 +113,15 @@ def citation_deletion():
 
 @app.route("/update_citation", methods=["POST"])
 def edit_citation():
-    update_citation(request.form.to_dict())
-
-    return redirect("/")
+    data = request.form.to_dict()
+    try:
+        validate_field("year", data["year"], exact_len=4)
+        update_citation(data)
+        return redirect("/")
+    except UserInputError as error:
+        print(error)
+        flash(str(error))
+        return redirect("/")
 
 
 @app.route("/export_citations", methods=["POST"])
@@ -137,7 +141,6 @@ def export_citations():
     )
 
 
-# testausta varten oleva reitti
 if test_env:
 
     @app.route("/reset_db")

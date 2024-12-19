@@ -7,6 +7,8 @@
 
 [Product backlog ja sprint backlogit](https://docs.google.com/spreadsheets/d/1cBhyVR3Zbdce5GyGX__jlB-rGVCpWYUqm5k0h3NEfdI)
 
+[Loppuraportti](https://docs.google.com/document/d/1hEfhmdQVazo9ftTHx9XY3M_Ac5k643xoquSGbALjRVE/edit?tab=t.0#heading=h.1k5r7yar2zh7)
+
 ## Asennusohjeet
 
 Sovelluksen käyttö vaatii Python-version 3.10-3.12.x, ja koneella tulee olla asennettuna Poetry riippuvuuksien hallintaa varten.
@@ -62,9 +64,4 @@ GOOGLE_API_KEY=<avain>
 
 ## Definition of done
 
-Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon. 
-
-## Lisenssi
-
-Työ on lisensoitu [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) -lisenssillä.
-
+Definition of done eli valmiin määritelmä tarkoittaa sitä, että vaatimukset on analysoitu, suunniteltu, ohjelmoitu, testattu, testaus automatisoitu, dokumentoitu ja integroitu muuhun ohjelmistoon.
